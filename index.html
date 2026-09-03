@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>小满 · 个人主页</title>
-  <meta name="description" content="天津大学（深圳）计算机科学与技术 2026 级新生的个人主页" />
-  <!-- TODO: 把这里的“小满”换成你的真实姓名 -->
+  <title>张景怡 · 个人主页</title>
+  <meta name="description" content="张景怡的个人主页——天津大学香港理工大学深圳未来技术学院计算机科学与技术大一新生" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -27,11 +26,12 @@
   <!-- 顶部导航 -->
   <header class="site-header">
     <nav class="nav container">
-      <a class="nav-logo" href="#home">小满 <span>· 主页</span></a>
+      <a class="nav-logo" href="#home">景怡 <span>· 主页</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="打开菜单">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">首页</a></li>
-        <li><a href="#about">关于我</a></li>
+        <li><a href="#about">个人信息</a></li>
+        <li><a href="#twin">数字分身</a></li>
         <li><a href="#courses">学习与课程</a></li>
         <li><a href="#projects">项目作品</a></li>
         <li><a href="#timeline">成长时间线</a></li>
@@ -41,58 +41,91 @@
   </header>
 
   <main>
-    <!-- 首页 Hero -->
+    <!-- 首页 Hero：头像 + 名字 + 一句话介绍 -->
     <section id="home" class="hero">
       <div class="container hero-inner">
-        <div class="avatar">👩‍💻</div>
+        <!-- 头像：可替换为真实照片，放入同目录 images/avatar.jpg 后改用 <img> -->
+        <div class="avatar">👧</div>
         <p class="hero-hello">你好呀，我是</p>
-        <h1 class="hero-name">小满</h1>
-        <p class="hero-subtitle">
-          天津大学（深圳）· 计算机科学与技术 · 2026 级大一新生
-        </p>
+        <h1 class="hero-name">张景怡</h1>
+        <!-- TODO：一句话介绍为暂用默认值，可随时修改 -->
+        <p class="hero-subtitle">一个爱钻研数学、沉迷 R&B 音乐的大一女孩</p>
         <p class="hero-intro">
-          一个正在学习用 AI 和代码把想法变成作品的女孩。喜欢把生活过成可爱又精致的样子，
-          也想把这样的审美带进我写的每一行代码里。
+          天津大学香港理工大学深圳未来技术学院 · 计算机科学与技术 · 大一新生。
+          喜欢音乐（尤其 R&B）、羽毛球和社交，正在用 AI 和代码一点点把想法变成作品。
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#projects">看我的作品</a>
-          <a class="btn btn-ghost" href="#contact">联系我</a>
+          <a class="btn btn-primary" href="#twin">和数字分身聊聊</a>
+          <a class="btn btn-ghost" href="#projects">看我的作品</a>
         </div>
       </div>
     </section>
 
-    <!-- 关于我 -->
+    <!-- 个人信息展示区 -->
     <section id="about" class="section">
       <div class="container">
-        <h2 class="section-title">关于我</h2>
-        <div class="about-grid">
-          <div class="about-card card">
-            <h3>🙋‍♀️ 我是谁</h3>
-            <p>
-              我是天津大学（深圳）计算机科学与技术专业 2026 级的大一新生。
-              对前端开发、人工智能和交互设计充满好奇，正在系统学习编程基础。
-            </p>
+        <h2 class="section-title">个人信息</h2>
+        <div class="profile-card card">
+          <dl class="profile-list">
+            <div class="profile-row">
+              <dt>姓名</dt>
+              <dd>张景怡</dd>
+            </div>
+            <div class="profile-row">
+              <dt>一句话介绍</dt>
+              <dd>一个爱钻研数学、沉迷 R&B 音乐的大一女孩</dd>
+            </div>
+            <div class="profile-row">
+              <dt>现在主要在做</dt>
+              <dd>大一新生，就读于天津大学香港理工大学深圳未来技术学院，专业为计算机科学与技术</dd>
+            </div>
+            <div class="profile-row">
+              <dt>我的兴趣</dt>
+              <dd>音乐（尤其喜欢 R&B）、羽毛球、社交</dd>
+            </div>
+            <div class="profile-row">
+              <dt>我的特点</dt>
+              <dd>我的虎牙 😁</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数字分身聊天区 -->
+    <section id="twin" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">数字分身聊天区</h2>
+        <p class="twin-hint">这是我的数字分身，你可以问我关于名字、学校、专业、兴趣、爱好之类的问题～</p>
+        <div class="chat-card card">
+          <div class="chat-header">
+            <span class="chat-avatar">🤖</span>
+            <div class="chat-meta">
+              <p class="chat-name">张景怡的数字分身</p>
+              <p class="chat-status"><span class="status-dot"></span>在线 · 随时问我</p>
+            </div>
           </div>
-          <div class="about-card card">
-            <h3>💗 我喜欢</h3>
-            <p>
-              精致可爱的 UI、漂亮的小动画、记录生活和学习的点滴，
-              也喜欢把复杂的问题拆成一个个能解决的小步骤。
-            </p>
+          <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+          <div class="chat-suggestions" id="chatSuggestions">
+            <button type="button" class="suggestion">你叫什么名字？</button>
+            <button type="button" class="suggestion">你的专业是什么？</button>
+            <button type="button" class="suggestion">你有什么兴趣爱好？</button>
           </div>
-          <div class="about-card card">
-            <h3>🎯 我的目标</h3>
-            <p>
-              用一学期的时间，独立做出能真正跑起来、让同学愿意用起来的作品，
-              成为一名能「理解代码」而不只是「生成代码」的开发者。
-            </p>
-          </div>
+          <form class="chat-input" id="chatForm">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="问我点什么吧，比如：你擅长什么？"
+              autocomplete="off"
+            />
+            <button type="submit" class="btn btn-primary btn-send">发送</button>
+          </form>
         </div>
       </div>
     </section>
 
     <!-- 学习与课程 -->
-    <section id="courses" class="section section-alt">
+    <section id="courses" class="section">
       <div class="container">
         <h2 class="section-title">学习与课程</h2>
         <div class="grid">
@@ -119,7 +152,7 @@
     </section>
 
     <!-- 项目作品 -->
-    <section id="projects" class="section">
+    <section id="projects" class="section section-alt">
       <div class="container">
         <h2 class="section-title">项目作品</h2>
         <div class="grid">
@@ -149,7 +182,7 @@
     </section>
 
     <!-- 成长时间线 -->
-    <section id="timeline" class="section section-alt">
+    <section id="timeline" class="section">
       <div class="container">
         <h2 class="section-title">成长时间线</h2>
         <ol class="timeline">
@@ -157,14 +190,14 @@
             <div class="timeline-dot">🎓</div>
             <div class="timeline-content card">
               <h3>2026 · 入学</h3>
-              <p>成为天津大学（深圳）计算机科学与技术专业大一新生。</p>
+              <p>成为天津大学香港理工大学深圳未来技术学院计算机科学与技术专业大一新生。</p>
             </div>
           </li>
           <li class="timeline-item">
             <div class="timeline-dot">💻</div>
             <div class="timeline-content card">
               <h3>2026 · 秋 · Vibe Coding</h3>
-              <p>学习用 AI 协作编程，完成个人主页和迷你项目。</p>
+              <p>学习用 AI 协作编程，完成个人主页和数字分身。</p>
             </div>
           </li>
           <li class="timeline-item">
@@ -179,7 +212,7 @@
     </section>
 
     <!-- 联系方式 -->
-    <section id="contact" class="section">
+    <section id="contact" class="section section-alt">
       <div class="container">
         <h2 class="section-title">联系方式</h2>
         <div class="contact-card card">
@@ -188,7 +221,7 @@
             <!-- TODO: 把下面的邮箱和链接换成你自己的 -->
             <li><a href="mailto:yourname@example.com">📧 邮箱：yourname@example.com</a></li>
             <li><a href="https://github.com/yourname" target="_blank" rel="noopener">🐙 GitHub：@yourname</a></li>
-            <li><span>🏫 天津大学（深圳）· 计算机科学与技术</span></li>
+            <li><span>🏫 天津大学香港理工大学深圳未来技术学院 · 计算机科学与技术</span></li>
           </ul>
         </div>
       </div>
@@ -197,7 +230,7 @@
 
   <footer class="site-footer">
     <p>✨ 用 AI 和代码，把想法变成可爱又实用的作品 ✨</p>
-    <p class="footer-note">© <span id="year"></span> 小满 · 天津大学（深圳）</p>
+    <p class="footer-note">© <span id="year"></span> 张景怡 · 天津大学香港理工大学深圳未来技术学院</p>
   </footer>
 
   <script src="js/main.js"></script>
