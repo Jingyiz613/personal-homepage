@@ -1,0 +1,400 @@
+/* ============================================================
+   个人主页样式表
+   说明：
+   - 使用 CSS 变量统一管理配色，方便以后一键换主题色
+   - 采用「少女风」柔和配色：奶油底 + 柔粉 + 薰衣草紫
+   - 所有板块都有圆角卡片、柔和阴影和 hover 动效
+   ============================================================ */
+
+:root {
+  --bg-top: #fff7fb;        /* 顶部渐变底色（奶油粉） */
+  --bg-bottom: #f3efff;     /* 底部渐变底色（薰衣草紫） */
+  --card-bg: #ffffff;       /* 卡片背景 */
+  --ink: #4a3f55;           /* 正文文字色 */
+  --ink-soft: #8a7d96;      /* 次要文字色 */
+  --pink: #ff8fb3;          /* 主色：柔粉 */
+  --pink-deep: #f76a9c;     /* 强调色：深粉 */
+  --purple: #b39bff;        /* 辅助色：薰衣草紫 */
+  --cream: #fff0f5;         /* 淡粉底 */
+  --shadow: 0 12px 30px rgba(247, 106, 156, 0.12);
+  --shadow-hover: 0 18px 42px rgba(247, 106, 156, 0.22);
+  --radius: 20px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* 点击导航平滑滚动到对应板块 */
+}
+
+body {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  line-height: 1.8;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.container {
+  width: min(1080px, 92%);
+  margin: 0 auto;
+}
+
+/* ---------- 漂浮装饰 ---------- */
+.decor-item {
+  position: fixed;
+  font-size: 28px;
+  opacity: 0.5;
+  pointer-events: none; /* 装饰不挡住点击 */
+  animation: float 6s ease-in-out infinite;
+  z-index: 0;
+}
+.d1 { top: 12%; left: 6%; animation-delay: 0s; }
+.d2 { top: 22%; right: 8%; animation-delay: 1.2s; }
+.d3 { top: 55%; left: 4%; animation-delay: 2.4s; }
+.d4 { top: 68%; right: 6%; animation-delay: 0.6s; }
+.d5 { top: 40%; left: 90%; animation-delay: 1.8s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-16px) rotate(6deg); }
+}
+
+/* ---------- 顶部导航 ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 247, 251, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 143, 179, 0.2);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.nav-logo {
+  font-family: "Ma Shan Zheng", "Noto Sans SC", cursive;
+  font-size: 1.6rem;
+  color: var(--pink-deep);
+  text-decoration: none;
+}
+.nav-logo span {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: var(--pink-deep);
+}
+
+/* 移动端菜单按钮（默认隐藏，小屏才显示） */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--pink-deep);
+  cursor: pointer;
+}
+
+/* ---------- Hero 首页 ---------- */
+.hero {
+  padding: 72px 0 88px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  background: linear-gradient(135deg, #ffe3ef, #e9e2ff);
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+
+.hero-hello {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.hero-name {
+  font-family: "Ma Shan Zheng", "Noto Sans SC", cursive;
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 400;
+  background: linear-gradient(120deg, var(--pink-deep), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 6px 0;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--pink-deep);
+  margin-bottom: 12px;
+}
+
+.hero-intro {
+  max-width: 560px;
+  margin: 0 auto 28px;
+  color: var(--ink-soft);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary {
+  background: linear-gradient(120deg, var(--pink), var(--purple));
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+.btn-ghost {
+  color: var(--pink-deep);
+  border: 2px solid var(--pink);
+}
+.btn-ghost:hover {
+  background: var(--cream);
+  transform: translateY(-3px);
+}
+
+/* ---------- 通用板块 ---------- */
+.section {
+  padding: 72px 0;
+  position: relative;
+  z-index: 1;
+}
+.section-alt {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 40px 40px 0 0;
+}
+
+.section-title {
+  text-align: center;
+  font-family: "Ma Shan Zheng", "Noto Sans SC", cursive;
+  font-size: 2.4rem;
+  color: var(--ink);
+  margin-bottom: 40px;
+  position: relative;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--pink), var(--purple));
+}
+
+/* ---------- 卡片网格 ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 26px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+.card p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.card-emoji {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 10px;
+}
+.card-meta {
+  color: var(--pink-deep) !important;
+  font-weight: 700;
+  font-size: 0.85rem !important;
+  margin-bottom: 8px;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  color: var(--pink-deep);
+  background: var(--cream);
+  border-radius: 999px;
+}
+
+/* ---------- 关于我 ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* ---------- 成长时间线 ---------- */
+.timeline {
+  list-style: none;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: linear-gradient(180deg, var(--pink), var(--purple));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 26px;
+}
+.timeline-dot {
+  position: absolute;
+  left: -40px;
+  top: 6px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+  font-size: 1rem;
+}
+.timeline-content h3 {
+  color: var(--pink-deep);
+}
+
+/* ---------- 联系方式 ---------- */
+.contact-card {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-intro {
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+.contact-list {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.contact-list a {
+  color: var(--pink-deep);
+  text-decoration: none;
+  font-weight: 700;
+}
+.contact-list a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- 页脚 ---------- */
+.site-footer {
+  text-align: center;
+  padding: 40px 0 56px;
+  color: var(--ink-soft);
+  position: relative;
+  z-index: 1;
+}
+.footer-note {
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ---------- 滚动出现动画 ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- 移动端适配 ---------- */
+@media (max-width: 720px) {
+  .nav-toggle {
+    display: block;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 16px 24px;
+    box-shadow: var(--shadow);
+  }
+  .nav-links.open {
+    display: flex;
+  }
+}
