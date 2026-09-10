@@ -62,7 +62,7 @@ const chatSuggestions = document.getElementById('chatSuggestions');
 const twinKnowledge = [
   {
     keywords: ['名字', '叫什么', '姓名', '你是谁', '称呼'],
-    answer: '我叫张景怡～一个爱钻研数学、沉迷 R&B 音乐的大一女孩 😊'
+    answer: '我叫张景怡～一个爱玩、沉迷 R&B 音乐的大一女孩 😊'
   },
   {
     keywords: ['学校', '学院', '大学', '未来技术学院'],
