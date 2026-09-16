@@ -1,166 +1,121 @@
-/* ============================================================
-   个人主页交互脚本
-   功能：
-   1. 移动端菜单开合
-   2. 页面滚动时给元素加「出现」动画
-   3. 自动填充页脚年份
-   4. 数字分身聊天（关键词匹配的简单问答）
-   ============================================================ */
-
-// 1. 移动端菜单：点击 ☰ 按钮，切换导航链接的显示/隐藏
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
-
-if (navToggle && navLinks) {
-  navToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
-
-  // 点击任意导航链接后，自动收起菜单（避免小屏下菜单一直展开）
-  navLinks.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-    });
-  });
+function closeMenu() {
+  navLinks.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.setAttribute('aria-label', '打开菜单');
 }
-
-// 2. 滚动出现动画：元素进入视口时添加 .visible，触发 CSS 淡入
-const revealEls = document.querySelectorAll(
-  '.card, .timeline-item, .section-title, .hero-inner'
-);
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target); // 出现一次后停止观察，避免重复
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-
-revealEls.forEach((el) => {
-  el.classList.add('reveal'); // 初始设为隐藏（配合 CSS）
-  observer.observe(el);
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
 });
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
-// 3. 自动更新页脚年份
-const yearEl = document.getElementById('year');
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
+const greeting = document.getElementById('timeGreeting');
+function updateGreeting() {
+  const hour = new Date().getHours(); // Browser local time, not the owner's live activity.
+  greeting.textContent = hour < 6 ? '夜深了，欢迎来这里坐一会儿 ✦'
+    : hour < 12 ? '早呀，工作室迎来新的一天 ✦'
+    : hour < 18 ? '下午好，来看看最近的灵感吧 ✦'
+    : '晚上好，工作室的灯亮着呢 ✦';
 }
+updateGreeting();
+setInterval(updateGreeting, 60 * 1000);
 
-// 4. 数字分身聊天
-const chatMessages = document.getElementById('chatMessages');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-const chatSuggestions = document.getElementById('chatSuggestions');
+const lamp = document.getElementById('lampToggle');
+const scene = document.getElementById('studioScene');
+const hero = document.getElementById('home');
+const lampFeedback = document.getElementById('lampFeedback');
+lamp.addEventListener('click', () => {
+  const off = scene.classList.toggle('lamp-off');
+  hero.classList.toggle('lamp-off', off);
+  lamp.setAttribute('aria-pressed', String(!off));
+  lamp.setAttribute('aria-label', off ? '打开台灯' : '关闭台灯');
+  lamp.querySelector('.lamp-button-text').textContent = off ? '台灯关了 · 点我打开' : '台灯亮着 · 点我切换';
+  lampFeedback.textContent = off ? '灯先休息一下，星星还在 ✧' : '好啦，继续待一会儿吧 ✦';
+});
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// 数字分身「知道」的信息，每条包含：关键词数组 + 对应回答
-const twinKnowledge = [
-  {
-    keywords: ['名字', '叫什么', '姓名', '你是谁', '称呼'],
-    answer: '我叫张景怡～一个爱玩、沉迷 R&B 音乐的大一女孩 😊'
-  },
-  {
-    keywords: ['学校', '学院', '大学', '未来技术学院'],
-    answer: '我读于天津大学香港理工大学深圳未来技术学院。'
-  },
-  {
-    keywords: ['专业', '学什么', '计算机'],
-    answer: '我的专业是计算机科学与技术，现在是一名大一新生。'
-  },
-  {
-    keywords: ['身份', '职业', '做什么的', '现在在做什么', '最近'],
-    answer: '我是大一新生，最近主要在认真学习，打牢基础。'
-  },
-  {
-    keywords: ['兴趣', '爱好', '喜欢', '音乐', 'r&b', 'rnb', '羽毛球', '社交'],
-    answer: '我喜欢音乐（尤其 R&B）、羽毛球，也喜欢社交认识新朋友～'
-  },
-  {
-    keywords: ['擅长', '钻研', '数学', '研究', '厉害'],
-    answer: '我擅长钻研，特别喜欢研究数学～'
-  },
-  {
-    keywords: ['特点', '虎牙', '记忆点', '特别'],
-    answer: '我最有记忆点的特点，就是我的虎牙啦 😁'
-  },
-  {
-    keywords: ['你好', 'hi', 'hello', '嗨', '在吗'],
-    answer: '你好呀！我是张景怡的数字分身，你可以问我名字、专业、兴趣、爱好之类的～'
-  },
-  {
-    keywords: ['谢谢', '感谢'],
-    answer: '不客气呀，能帮到你就好～'
-  }
-];
-
-// 没匹配到时的兜底回答
-const fallbackAnswer =
-  '这个问题我还在学习中～你可以问我关于名字、学校、专业、兴趣、爱好、擅长的事哦！';
-
-// 根据用户输入匹配最合适的回答
-function getTwinReply(input) {
-  const text = input.toLowerCase();
-  for (const item of twinKnowledge) {
-    if (item.keywords.some((kw) => text.includes(kw))) {
-      return item.answer;
+const revealEls = document.querySelectorAll('.card, .timeline-item, .section-title');
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
     }
-  }
-  return fallbackAnswer;
+  }), { threshold: .08 });
+  revealEls.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
 }
 
-// 往聊天框里追加一条消息
+const messages = document.getElementById('chatMessages');
+const form = document.getElementById('chatForm');
+const input = document.getElementById('chatInput');
+const knowledge = [
+  { keys: ['名字', '叫什么', '姓名', '你是谁', '称呼'], answer: '我叫张景怡～一个爱玩、沉迷 R&B 音乐的大一女孩 😊' },
+  { keys: ['学校', '学院', '大学', '未来技术学院'], answer: '我读于天津大学香港理工大学深圳未来技术学院。' },
+  { keys: ['专业', '学什么', '计算机'], answer: '我的专业是计算机科学与技术，现在是一名大一新生。' },
+  { keys: ['身份', '职业', '做什么的', '现在在做什么', '最近'], answer: '主页记录的是我作为大一新生学习计算机、尝试用 AI 和代码做作品的过程。至于此刻在做什么，我可没有实时消息哦～' },
+  { keys: ['兴趣', '爱好', '喜欢', '音乐', 'r&b', 'rnb', '羽毛球', '社交'], answer: '我喜欢音乐（尤其 R&B）、羽毛球，也喜欢社交认识新朋友～' },
+  { keys: ['擅长', '钻研', '数学', '研究', '厉害'], answer: '我擅长钻研，特别喜欢研究数学～' },
+  { keys: ['特点', '虎牙', '记忆点', '特别'], answer: '我最有记忆点的特点，就是我的虎牙啦 😁' },
+  { keys: ['项目', '作品', '网站', '主页'], answer: '这个个人主页是我用自然语言和 AI 协作完成的第一个作品。其他项目还在规划中，可以去作品区看看～' },
+  { keys: ['你好', 'hi', 'hello', '嗨', '在吗'], answer: '你好呀！欢迎来到我的小工作室 ✦ 想聊聊音乐、羽毛球、学习，还是这个网站？' },
+  { keys: ['谢谢', '感谢'], answer: '不客气呀，工作室随时欢迎你来坐坐～' }
+];
+const fallbacks = [
+  '这个问题我的小脑袋暂时没有存档 👀 换个话题试试？音乐、羽毛球或者学习都可以～',
+  '我还不知道这个答案耶。要不要问问我关于专业、作品或者兴趣的事？ ✦',
+  '这题先留在工作室的便签上吧～我现在能聊的是主页里记录的那些事。'
+];
+const questions = ['你叫什么名字？', '你喜欢什么音乐？', '你学什么专业？', '你的特点是什么？', '你做过什么项目？', '你喜欢羽毛球吗？'];
+let lastFallback = -1;
+let lastQuestion = -1;
+let replyQueue = Promise.resolve();
+function pickDifferent(items, previous) {
+  if (previous < 0) return Math.floor(Math.random() * items.length);
+  return (previous + 1 + Math.floor(Math.random() * (items.length - 1)) + items.length) % items.length;
+}
+function getReply(question) {
+  const text = question.toLowerCase();
+  const match = knowledge.find(item => item.keys.some(key => text.includes(key)));
+  if (match) return match.answer;
+  lastFallback = pickDifferent(fallbacks, lastFallback);
+  return fallbacks[lastFallback];
+}
 function addMessage(text, sender) {
   const bubble = document.createElement('div');
   bubble.className = 'msg ' + (sender === 'user' ? 'msg-user' : 'msg-bot');
   bubble.textContent = text;
-  chatMessages.appendChild(bubble);
-  chatMessages.scrollTop = chatMessages.scrollHeight; // 自动滚动到最新
+  messages.appendChild(bubble);
+  messages.scrollTop = messages.scrollHeight;
   return bubble;
 }
-
-// 数字分身回复：先显示“正在输入…”，短暂延迟后再回答
-function botReply(question) {
-  const typing = addMessage('正在输入…', 'bot');
-  typing.classList.add('msg-typing');
-
-  const answer = getTwinReply(question);
-
-  setTimeout(() => {
-    typing.remove();
-    addMessage(answer, 'bot');
-  }, 600);
+function sendQuestion(question) {
+  const clean = question.trim();
+  if (!clean) return;
+  addMessage(clean, 'user');
+  replyQueue = replyQueue.then(() => new Promise(resolve => {
+    const typing = addMessage('正在输入…', 'bot');
+    typing.classList.add('msg-typing');
+    setTimeout(() => {
+      typing.remove();
+      addMessage(getReply(clean), 'bot');
+      resolve();
+    }, 600);
+  }));
 }
-
-if (chatForm && chatInput && chatMessages) {
-  // 提交问题
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const q = chatInput.value.trim();
-    if (!q) return;
-    addMessage(q, 'user');
-    chatInput.value = '';
-    botReply(q);
-  });
-
-  // 点击快捷问题
-  if (chatSuggestions) {
-    chatSuggestions.querySelectorAll('.suggestion').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const q = btn.textContent.trim();
-        addMessage(q, 'user');
-        botReply(q);
-      });
-    });
-  }
-
-  // 开场欢迎语
-  addMessage(
-    '你好呀！我是张景怡的数字分身，你可以问我关于名字、专业、兴趣、爱好之类的问题～',
-    'bot'
-  );
-}
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  sendQuestion(input.value);
+  input.value = '';
+});
+document.querySelectorAll('#chatSuggestions .suggestion:not(.surprise)').forEach(button => {
+  button.addEventListener('click', () => sendQuestion(button.textContent));
+});
+document.getElementById('surpriseQuestion').addEventListener('click', () => {
+  lastQuestion = pickDifferent(questions, lastQuestion);
+  sendQuestion(questions[lastQuestion]);
+});
+addMessage('你好呀！我是张景怡的数字分身。这里有关于她的小小问答，也可以点「随机问我」找个话题 ✦', 'bot');
