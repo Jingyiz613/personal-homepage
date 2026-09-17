@@ -55,6 +55,39 @@ lamp.addEventListener('click', () => {
 });
 document.getElementById('year').textContent = new Date().getFullYear();
 
+document.querySelectorAll('.course-card').forEach(card => {
+  const button = card.querySelector('.course-flip');
+  const front = card.querySelector('.course-front');
+  const back = card.querySelector('.course-back');
+  const courseName = card.querySelector('.course-title').textContent.replace(/\s+/g, ' ').trim();
+  let hovered = false;
+  let manuallyFlipped = false;
+  function updateFlip() {
+    const flipped = hovered || manuallyFlipped;
+    card.classList.toggle('is-flipped', flipped);
+    button.setAttribute('aria-pressed', String(flipped));
+    button.setAttribute('aria-label', `${flipped ? '合上' : '翻开'}${courseName}的课程笔记`);
+    front.setAttribute('aria-hidden', String(flipped));
+    back.setAttribute('aria-hidden', String(!flipped));
+  }
+  card.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'mouse') return;
+    manuallyFlipped = false;
+    hovered = true;
+    updateFlip();
+  });
+  card.addEventListener('pointerleave', event => {
+    if (event.pointerType !== 'mouse') return;
+    hovered = false;
+    updateFlip();
+  });
+  button.addEventListener('click', event => {
+    if (event.pointerType === 'mouse' || (event.detail > 0 && hovered)) return;
+    manuallyFlipped = !manuallyFlipped;
+    updateFlip();
+  });
+});
+
 const revealEls = document.querySelectorAll('.card, .timeline-item, .section-title');
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -86,16 +119,36 @@ const fallbacks = [
   '我还不知道这个答案耶。要不要问问我关于专业、作品或者兴趣的事？ ✦',
   '这题先留在工作室的便签上吧～我现在能聊的是主页里记录的那些事。'
 ];
-const questions = ['你叫什么名字？', '你喜欢什么音乐？', '你学什么专业？', '你的特点是什么？', '你做过什么项目？', '你喜欢羽毛球吗？'];
+const questions = ['你叫什么名字？', '你喜欢什么音乐？', '为什么喜欢方大同？', '最喜欢哪张专辑？', '最喜欢哪首歌？', '你学什么专业？', '你的特点是什么？', '你做过什么项目？', '你喜欢羽毛球吗？'];
 let lastFallback = -1;
 let lastQuestion = -1;
+let lastTopic = null;
 let replyQueue = Promise.resolve();
+const fangReplies = {
+  origin: '是一个喜欢方大同的朋友带着我一起听他的歌，后来我也爱上了～',
+  album: '我最爱方大同的《未来》专辑！',
+  song: '《未来》里我最喜欢的歌是《公园》～',
+  overview: '朋友喜欢方大同，带着我一起听，后来我也爱上了。他的专辑里我最爱《未来》，里面最喜欢《公园》～'
+};
 function pickDifferent(items, previous) {
   if (previous < 0) return Math.floor(Math.random() * items.length);
   return (previous + 1 + Math.floor(Math.random() * (items.length - 1)) + items.length) % items.length;
 }
 function getReply(question) {
-  const text = question.toLowerCase();
+  const text = question.trim().toLowerCase();
+  const mentionsFang = text.includes('方大同') || text.includes('khalil');
+  const asksAlbum = /专辑|哪张|哪一张/.test(text);
+  const asksSong = /哪首|哪一首|歌曲|公园|最喜欢.{0,5}歌|最爱.{0,5}歌/.test(text);
+  const asksOrigin = /为什么|怎么|如何|原因|认识|开始听|谁带|谁推荐/.test(text);
+  const followsFang = lastTopic === 'fang' && text.length <= 14 && (asksAlbum || asksSong || asksOrigin);
+  if (mentionsFang || followsFang || text.includes('公园') || /最爱.{0,4}专辑|最喜欢.{0,5}专辑|最喜欢.{0,5}歌|最爱.{0,5}歌|哪首歌/.test(text)) {
+    lastTopic = 'fang';
+    if (asksAlbum) return fangReplies.album;
+    if (asksSong) return fangReplies.song;
+    if (asksOrigin) return fangReplies.origin;
+    return fangReplies.overview;
+  }
+  lastTopic = null;
   const match = knowledge.find(item => item.keys.some(key => text.includes(key)));
   if (match) return match.answer;
   lastFallback = pickDifferent(fallbacks, lastFallback);

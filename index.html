@@ -162,7 +162,7 @@
     <section id="albums" class="section album-section">
       <div class="container">
         <p class="section-kicker">03 / ALBUM SHELF</p>
-        <h2 class="section-title">方大同的专辑书架 <span>♫</span></h2>
+        <h2 class="section-title">我最爱的歌手——方大同</h2>
         <p class="album-intro">从 Soulboy 到 The Dreamer。把鼠标移到卡片上，向下滚动，逐张翻看封面。</p>
         <div class="album-scroll" id="albumScroll" tabindex="0" role="region" aria-label="滚动翻阅方大同的十张专辑">
         <div class="album-scroll-track">
@@ -235,6 +235,8 @@
             <button type="button" class="suggestion">你叫什么名字？</button>
             <button type="button" class="suggestion">你的专业是什么？</button>
             <button type="button" class="suggestion">你有什么兴趣爱好？</button>
+            <button type="button" class="suggestion">为什么喜欢方大同？</button>
+            <button type="button" class="suggestion">最喜欢哪张专辑？</button>
             <button type="button" class="suggestion surprise" id="surpriseQuestion">随机问我 ✦</button>
           </div>
           <form class="chat-input" id="chatForm">
@@ -255,24 +257,66 @@
     <section id="courses" class="section">
       <div class="container">
         <p class="section-kicker">05 / LEARNING</p><h2 class="section-title">学习与课程 <span>✳</span></h2>
-        <div class="grid">
-          <article class="card">
-            <span class="card-emoji">🤖</span>
-            <h3>Project-Based CST &amp; AI Foundations</h3>
-            <p class="card-meta">专业基础课 · 进行中</p>
-            <p>基于项目的计算机与人工智能基础，学习 Vibe Coding 和真实项目开发。</p>
+        <div class="grid course-grid">
+          <article class="course-card">
+            <button class="course-flip" type="button" aria-pressed="false" aria-label="翻开 Project-Based CST &amp; AI Foundations 的课程笔记">
+              <span class="course-inner">
+                <span class="course-face course-front" aria-hidden="false">
+                  <span class="course-top"><span>STUDY NOTE / 01</span><span class="course-mark">✧</span></span>
+                  <span class="course-symbol" aria-hidden="true">{ }</span>
+                  <span class="course-title">Project-Based CST<br>&amp; AI Foundations</span>
+                  <span class="course-tag">专业基础课 <i></i> 进行中</span>
+                  <span class="course-hint">移入或轻点翻开 <span aria-hidden="true">↗</span></span>
+                </span>
+                <span class="course-face course-back" aria-hidden="true">
+                  <span class="course-top"><span>INSIDE THE NOTE / 01</span><span class="course-mark">✧</span></span>
+                  <span class="course-back-label">这门课在学什么</span>
+                  <span class="course-back-title">Project-Based CST &amp; AI Foundations</span>
+                  <span class="course-description">基于项目的计算机与人工智能基础，学习 Vibe Coding 和真实项目开发。</span>
+                  <span class="course-hint">移开或轻点合上 <span aria-hidden="true">↙</span></span>
+                </span>
+              </span>
+            </button>
           </article>
-          <article class="card">
-            <span class="card-emoji">💻</span>
-            <h3>计算机程序设计</h3>
-            <p class="card-meta">同修课 · 进行中</p>
-            <p>打牢编程基本功，学习变量、控制流、函数等核心概念。</p>
+          <article class="course-card">
+            <button class="course-flip" type="button" aria-pressed="false" aria-label="翻开计算机程序设计的课程笔记">
+              <span class="course-inner">
+                <span class="course-face course-front" aria-hidden="false">
+                  <span class="course-top"><span>STUDY NOTE / 02</span><span class="course-mark">✳</span></span>
+                  <span class="course-symbol" aria-hidden="true">&lt;/&gt;</span>
+                  <span class="course-title">计算机程序设计</span>
+                  <span class="course-tag">同修课 <i></i> 进行中</span>
+                  <span class="course-hint">移入或轻点翻开 <span aria-hidden="true">↗</span></span>
+                </span>
+                <span class="course-face course-back" aria-hidden="true">
+                  <span class="course-top"><span>INSIDE THE NOTE / 02</span><span class="course-mark">✳</span></span>
+                  <span class="course-back-label">这门课在学什么</span>
+                  <span class="course-back-title">计算机程序设计</span>
+                  <span class="course-description">打牢编程基本功，学习变量、控制流、函数等核心概念。</span>
+                  <span class="course-hint">移开或轻点合上 <span aria-hidden="true">↙</span></span>
+                </span>
+              </span>
+            </button>
           </article>
-          <article class="card">
-            <span class="card-emoji">📐</span>
-            <h3>高等数学</h3>
-            <p class="card-meta">基础课 · 进行中</p>
-            <p>建立数学与逻辑思维，为后续算法和 AI 学习打基础。</p>
+          <article class="course-card">
+            <button class="course-flip" type="button" aria-pressed="false" aria-label="翻开高等数学的课程笔记">
+              <span class="course-inner">
+                <span class="course-face course-front" aria-hidden="false">
+                  <span class="course-top"><span>STUDY NOTE / 03</span><span class="course-mark">✦</span></span>
+                  <span class="course-symbol" aria-hidden="true">∑</span>
+                  <span class="course-title">高等数学</span>
+                  <span class="course-tag">基础课 <i></i> 进行中</span>
+                  <span class="course-hint">移入或轻点翻开 <span aria-hidden="true">↗</span></span>
+                </span>
+                <span class="course-face course-back" aria-hidden="true">
+                  <span class="course-top"><span>INSIDE THE NOTE / 03</span><span class="course-mark">✦</span></span>
+                  <span class="course-back-label">这门课在学什么</span>
+                  <span class="course-back-title">高等数学</span>
+                  <span class="course-description">建立数学与逻辑思维，为后续算法和 AI 学习打基础。</span>
+                  <span class="course-hint">移开或轻点合上 <span aria-hidden="true">↙</span></span>
+                </span>
+              </span>
+            </button>
           </article>
         </div>
       </div>
