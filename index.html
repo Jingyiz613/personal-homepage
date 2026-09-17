@@ -22,6 +22,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">首页</a></li>
         <li><a href="#about">个人信息</a></li>
+        <li><a href="#music">音乐角落</a></li>
         <li><a href="#twin">数字分身</a></li>
         <li><a href="#courses">学习与课程</a></li>
         <li><a href="#projects">项目作品</a></li>
@@ -34,6 +35,7 @@
   <main>
     <!-- 工作室入口 -->
     <section id="home" class="hero">
+      <canvas class="starfield starfield-desktop" id="desktopStarfield" aria-hidden="true"></canvas>
       <div class="container hero-inner">
         <div class="hero-copy">
           <p class="eyebrow"><span class="eyebrow-star" aria-hidden="true">✦</span> JINGYI'S LITTLE STUDIO <span class="eyebrow-star" aria-hidden="true">✦</span></p>
@@ -48,11 +50,10 @@
           <p class="hero-footnote">在这里，灵感可以慢慢生长 <span aria-hidden="true">✳</span></p>
         </div>
         <div class="studio-scene" id="studioScene">
+          <canvas class="starfield starfield-mobile" id="mobileStarfield" aria-hidden="true"></canvas>
           <div class="sky-motion" aria-hidden="true">
             <span class="shooting-star meteor-one"></span>
             <span class="shooting-star meteor-two"></span>
-            <span class="twinkle-star twinkle-one"></span>
-            <span class="twinkle-star twinkle-two"></span>
           </div>
           <button class="lamp-button" id="lampToggle" type="button" aria-label="关闭台灯" aria-pressed="true" title="切换台灯">
             <span class="lamp-button-icon" aria-hidden="true">✦</span><span class="lamp-button-text">台灯亮着 · 点我切换</span>
@@ -93,10 +94,57 @@
       </div>
     </section>
 
+    <!-- 音乐角落：通过音乐平台的官方嵌入播放器播放 -->
+    <section id="music" class="section music-section">
+      <div class="container">
+        <p class="section-kicker">02 / LITTLE SOUNDTRACK</p>
+        <h2 class="section-title">工作室的音乐角落 <span>♫</span></h2>
+        <div class="music-card card" id="musicCard">
+          <div class="cassette-wrap" aria-hidden="true">
+            <div class="cassette">
+              <div class="cassette-topline"><span>JINGYI'S MIXTAPE</span><span>✦ 02</span></div>
+              <div class="cassette-label">SLOW NIGHT / SIDE A</div>
+              <div class="cassette-window"><span class="cassette-reel"></span><span class="cassette-tape"></span><span class="cassette-reel"></span></div>
+              <div class="cassette-stripe"></div>
+              <div class="cassette-screws"><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="music-content">
+            <div class="music-switch" role="group" aria-label="音乐分类">
+              <button class="music-mode active" id="musicNow" type="button" aria-pressed="true">正在听</button>
+              <button class="music-mode" id="musicLiked" type="button" aria-pressed="false">最近喜欢</button>
+            </div>
+            <p class="music-overline" id="musicOverline">SIDE A · 正在听</p>
+            <h3 class="music-title" id="musicTitle">Hit the Rhyme</h3>
+            <p class="music-artist" id="musicArtist">蛋堡 Soft Lipa</p>
+            <p class="music-quote" id="musicQuote">“让喜欢的旋律，陪灵感慢慢亮起来。”</p>
+            <div class="music-controls">
+              <button class="music-play" id="musicPlay" type="button" aria-label="选择音频并播放"><span id="musicPlayIcon" aria-hidden="true">▶</span></button>
+              <div class="music-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span class="music-state" id="musicState" role="status" aria-live="polite">点击播放，在这里听这首歌</span>
+            </div>
+            <div class="music-progress">
+              <span id="musicElapsed">0:00</span>
+              <input id="musicSeek" type="range" min="0" max="100" value="0" aria-label="音乐播放进度" disabled>
+              <span id="musicDuration">0:00</span>
+            </div>
+            <button class="music-load" id="musicLoad" type="button">更换音频文件</button>
+            <input id="musicFile" type="file" accept="audio/mpeg,audio/mp4,audio/ogg,audio/wav,audio/aac,.mp3,.m4a,.ogg,.wav,.aac" hidden>
+            <audio id="musicAudio" preload="metadata"></audio>
+            <p class="music-source-note">这两首歌已放入网站文件；点击播放即可在本页收听，不会自动播放。</p>
+            <div class="music-source-links">
+              <a id="musicSpotifyLink" href="https://open.spotify.com/track/49gm0W9gCb9dSaFZQYJQsh" target="_blank" rel="noopener noreferrer">在 Spotify 打开 ↗</a>
+              <a id="musicAppleLink" href="https://music.apple.com/us/song/1178538969" target="_blank" rel="noopener noreferrer">在 Apple Music 打开 ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 数字分身聊天区 -->
     <section id="twin" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">02 / SAY HELLO</p><h2 class="section-title">和小景怡聊聊 <span>✦</span></h2>
+        <p class="section-kicker">03 / SAY HELLO</p><h2 class="section-title">和小景怡聊聊 <span>✦</span></h2>
         <p class="twin-hint">这是我的数字分身，你可以问我关于名字、学校、专业、兴趣、爱好之类的问题～</p>
         <div class="chat-card card">
           <div class="chat-header">
@@ -130,7 +178,7 @@
     <!-- 学习与课程 -->
     <section id="courses" class="section">
       <div class="container">
-        <p class="section-kicker">03 / LEARNING</p><h2 class="section-title">学习与课程 <span>✳</span></h2>
+        <p class="section-kicker">04 / LEARNING</p><h2 class="section-title">学习与课程 <span>✳</span></h2>
         <div class="grid">
           <article class="card">
             <span class="card-emoji">🤖</span>
@@ -157,7 +205,7 @@
     <!-- 项目作品 -->
     <section id="projects" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">04 / MAKING</p><h2 class="section-title">项目作品 <span>✦</span></h2>
+        <p class="section-kicker">05 / MAKING</p><h2 class="section-title">项目作品 <span>✦</span></h2>
         <div class="grid">
           <article class="card project-card">
             <span class="card-emoji">🌸</span>
@@ -187,7 +235,7 @@
     <!-- 成长时间线 -->
     <section id="timeline" class="section">
       <div class="container">
-        <p class="section-kicker">05 / MY PATH</p><h2 class="section-title">成长时间线 <span>✳</span></h2>
+        <p class="section-kicker">06 / MY PATH</p><h2 class="section-title">成长时间线 <span>✳</span></h2>
         <ol class="timeline">
           <li class="timeline-item">
             <div class="timeline-dot">🎓</div>
@@ -217,7 +265,7 @@
     <!-- 联系方式 -->
     <section id="contact" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">06 / KEEP IN TOUCH</p><h2 class="section-title">留个联系方式 <span>✦</span></h2>
+        <p class="section-kicker">07 / KEEP IN TOUCH</p><h2 class="section-title">留个联系方式 <span>✦</span></h2>
         <div class="contact-card card">
           <p class="contact-intro">想认识我、一起学习，或者聊聊可爱又有趣的项目？</p>
           <ul class="contact-list">
@@ -236,5 +284,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/stars.js"></script>
+  <script src="js/music.js"></script>
 </body>
 </html>

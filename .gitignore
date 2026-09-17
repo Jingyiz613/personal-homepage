@@ -9,3 +9,6 @@ node_modules/
 # 环境变量（不要把密钥提交到仓库）
 .env
 .env.local
+
+# git 备份包（不纳入版本控制，避免误提交大文件）
+*.bundle
