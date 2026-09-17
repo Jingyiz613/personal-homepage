@@ -69,28 +69,42 @@
       <div class="container">
         <p class="section-kicker">01 / ABOUT ME</p><h2 class="section-title">关于我 <span>✳</span></h2>
         <div class="profile-card card">
-          <dl class="profile-list">
-            <div class="profile-row">
-              <dt>姓名</dt>
-              <dd>张景怡</dd>
+          <div class="profile-intro">
+            <span class="profile-eyebrow">A NOTE FROM MY STUDIO <span aria-hidden="true">✦</span></span>
+            <h3>嗨，我是<span>张景怡</span></h3>
+            <p>一个爱玩、沉迷 R&amp;B 音乐的大一女孩</p>
+            <div class="profile-plant" aria-hidden="true">
+              <svg viewBox="0 0 120 120" focusable="false" aria-hidden="true">
+                <g class="plant-foliage">
+                  <path class="plant-branches" d="M60 85 C60 65 59 38 59 20 M59 66 Q50 54 36 51 M60 70 Q69 57 84 51 M59 45 Q49 35 42 29 M59 49 Q68 38 77 32" />
+                  <ellipse cx="33" cy="50" rx="16" ry="7" transform="rotate(22 33 50)" />
+                  <ellipse cx="86" cy="49" rx="16" ry="7" transform="rotate(-22 86 49)" />
+                  <ellipse cx="40" cy="27" rx="13" ry="6" transform="rotate(38 40 27)" />
+                  <ellipse cx="79" cy="30" rx="13" ry="6" transform="rotate(-38 79 30)" />
+                  <ellipse cx="59" cy="16" rx="7" ry="13" transform="rotate(-12 59 16)" />
+                </g>
+                <path class="plant-pot-body" d="M43 88 H77 L72 114 H48 Z" />
+                <path class="plant-pot-rim" d="M40 82 H80 V90 H40 Z" />
+              </svg>
             </div>
-            <div class="profile-row">
-              <dt>一句话介绍</dt>
-              <dd>一个爱玩、沉迷 R&B 音乐的大一女孩</dd>
-            </div>
-            <div class="profile-row">
-              <dt>现在主要在做</dt>
-              <dd>大一新生，就读于天津大学香港理工大学深圳未来技术学院，专业为计算机科学与技术</dd>
-            </div>
-            <div class="profile-row">
-              <dt>我的兴趣</dt>
-              <dd>音乐（尤其喜欢 R&B）、羽毛球、社交</dd>
-            </div>
-            <div class="profile-row">
-              <dt>我的特点</dt>
-              <dd>我的虎牙 😁</dd>
-            </div>
-          </dl>
+            <span class="profile-intro-foot">在这里，慢慢认识我吧 <span aria-hidden="true">✳</span></span>
+          </div>
+          <div class="profile-notes">
+            <article class="profile-note profile-note-study">
+              <span class="note-pin" aria-hidden="true"></span>
+              <p class="note-label">01 / 正在学习</p>
+              <p>大一新生，就读于天津大学香港理工大学深圳未来技术学院，专业为计算机科学与技术</p>
+            </article>
+            <article class="profile-note profile-note-likes">
+              <span class="note-pin" aria-hidden="true"></span>
+              <p class="note-label">02 / 喜欢的事</p>
+              <p>音乐（尤其喜欢 R&amp;B）、羽毛球、社交</p>
+            </article>
+            <details class="profile-note profile-note-secret">
+              <summary><span class="note-label">03 / 关于我的小细节</span><span class="note-open">点开看看 <span aria-hidden="true">↗</span></span></summary>
+              <p class="note-answer">我的虎牙 😁</p>
+            </details>
+          </div>
         </div>
       </div>
     </section>
@@ -101,6 +115,7 @@
         <p class="section-kicker">02 / LITTLE SOUNDTRACK</p>
         <h2 class="section-title">工作室的音乐角落 <span>♫</span></h2>
         <div class="music-card card" id="musicCard">
+          <canvas class="music-snow" id="musicSnow" aria-hidden="true"></canvas>
           <div class="cassette-wrap" aria-hidden="true">
             <div class="cassette">
               <div class="cassette-topline"><span>JINGYI'S MIXTAPE</span><span>✦ 02</span></div>
@@ -288,5 +303,6 @@
   <script src="js/stars.js"></script>
   <script src="js/page-sky.js"></script>
   <script src="js/music.js"></script>
+  <script src="js/music-snow.js"></script>
 </body>
 </html>
