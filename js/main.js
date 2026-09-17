@@ -13,6 +13,23 @@ navToggle.addEventListener('click', () => {
 navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
+const sectionLinks = [...navLinks.querySelectorAll('a[href^="#"]')];
+if ('IntersectionObserver' in window) {
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      sectionLinks.forEach(link => {
+        if (link.getAttribute('href') === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    });
+  }, { rootMargin: '-24% 0px -64% 0px' });
+  sectionLinks.forEach(link => {
+    const section = document.querySelector(link.getAttribute('href'));
+    if (section) sectionObserver.observe(section);
+  });
+}
+
 const greeting = document.getElementById('timeGreeting');
 function updateGreeting() {
   const hour = new Date().getHours(); // Browser local time, not the owner's live activity.
@@ -97,7 +114,7 @@ function sendQuestion(question) {
   if (!clean) return;
   addMessage(clean, 'user');
   replyQueue = replyQueue.then(() => new Promise(resolve => {
-    const typing = addMessage('正在输入…', 'bot');
+    const typing = addMessage('正在输入', 'bot');
     typing.classList.add('msg-typing');
     setTimeout(() => {
       typing.remove();
