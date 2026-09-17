@@ -1,11 +1,11 @@
 // Bundled audio plays in-page; visitors can temporarily replace a track with their own file.
 const musicTracks = [
   { side: 'SIDE A · 正在听', title: 'Hit the Rhyme', artist: '蛋堡 Soft Lipa',
-    quote: '“让喜欢的旋律，陪灵感慢慢亮起来。”',
+    quote: '“如果每首歌都是我的孩子 嗯 我想大部分都是女孩子”',
     spotify: 'https://open.spotify.com/track/49gm0W9gCb9dSaFZQYJQsh',
     apple: 'https://music.apple.com/us/song/1178538969', src: 'audio/hit-the-rhyme.mp3', objectUrl: null },
   { side: 'SIDE B · 最近喜欢', title: '爱不来 (feat. MISS KO)', artist: '方大同 · 葛仲珊',
-    quote: '“有些旋律，适合在安静的夜里重听。”',
+    quote: '“为你写了这首大同唱给你听”',
     spotify: 'https://open.spotify.com/track/67BfxbeBGgaQpP8O2BfeYg',
     apple: 'https://music.apple.com/us/song/1579903905', src: 'audio/ai-bu-lai.mp3', objectUrl: null }
 ];

@@ -24,6 +24,7 @@
         <li><a href="#home">首页</a></li>
         <li><a href="#about">个人信息</a></li>
         <li><a href="#music">音乐角落</a></li>
+        <li><a href="#albums">专辑收藏</a></li>
         <li><a href="#twin">数字分身</a></li>
         <li><a href="#courses">学习与课程</a></li>
         <li><a href="#projects">项目作品</a></li>
@@ -133,7 +134,7 @@
             <p class="music-overline" id="musicOverline">SIDE A · 正在听</p>
             <h3 class="music-title" id="musicTitle">Hit the Rhyme</h3>
             <p class="music-artist" id="musicArtist">蛋堡 Soft Lipa</p>
-            <p class="music-quote" id="musicQuote">“让喜欢的旋律，陪灵感慢慢亮起来。”</p>
+            <p class="music-quote" id="musicQuote">“如果每首歌都是我的孩子 嗯 我想大部分都是女孩子”</p>
             <div class="music-controls">
               <button class="music-play" id="musicPlay" type="button" aria-label="选择音频并播放"><span id="musicPlayIcon" aria-hidden="true">▶</span></button>
               <div class="music-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -157,10 +158,69 @@
       </div>
     </section>
 
+    <!-- 方大同正式专辑：卡片堆叠浏览 -->
+    <section id="albums" class="section album-section">
+      <div class="container">
+        <p class="section-kicker">03 / ALBUM SHELF</p>
+        <h2 class="section-title">方大同的专辑书架 <span>♫</span></h2>
+        <p class="album-intro">从 Soulboy 到 The Dreamer。把鼠标移到卡片上，向下滚动，逐张翻看封面。</p>
+        <div class="album-scroll" id="albumScroll" tabindex="0" role="region" aria-label="滚动翻阅方大同的十张专辑">
+        <div class="album-scroll-track">
+        <div class="album-shelf card">
+          <div class="album-stack-stage">
+            <div class="album-stack" id="albumStack" role="group" aria-label="方大同专辑封面卡片堆">
+              <button class="album-cover" type="button" data-album="0" aria-label="查看 Soulboy，2005 年"><img src="images/albums/soulboy.jpg" alt="Soulboy 专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="1" aria-label="查看 爱爱爱，2006 年"><img src="images/albums/this-love.jpg" alt="爱爱爱专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="2" aria-label="查看 未来，2007 年"><img src="images/albums/wonderland.jpg" alt="未来专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="3" aria-label="查看 橙月，2008 年"><img src="images/albums/orange-moon.jpg" alt="橙月专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="4" aria-label="查看 可啦思刻，2009 年"><img src="images/albums/timeless.jpg" alt="可啦思刻专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="5" aria-label="查看 15，2011 年"><img src="images/albums/15.jpg" alt="15 专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="6" aria-label="查看 回到未来，2012 年"><img src="images/albums/back-to-wonderland.jpg" alt="回到未来专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="7" aria-label="查看 危险世界，2014 年"><img src="images/albums/dangerous-world.jpg" alt="危险世界专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="8" aria-label="查看 JTW 西游记，2016 年"><img src="images/albums/journey-to-the-west.jpg" alt="JTW 西游记专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="9" aria-label="查看 The Dreamer，2024 年"><img src="images/albums/the-dreamer.jpg" alt="The Dreamer 专辑封面" width="600" height="600"></button>
+            </div>
+          </div>
+          <div class="album-details">
+            <p class="album-small-label">KHALIL FONG · ALBUMS</p>
+            <p class="album-count" id="albumCount">01 / 10</p>
+            <p class="album-year" id="albumYear">2005</p>
+            <h3 class="album-title" id="albumTitle" aria-live="polite">Soulboy</h3>
+            <p class="album-hint">在这里向下滚动翻页，也可以点击封面或专辑名。</p>
+            <div class="album-controls" role="group" aria-label="切换专辑">
+              <button id="albumPrevious" type="button" aria-label="上一张专辑">←</button>
+              <button id="albumNext" type="button" aria-label="下一张专辑">→</button>
+              <a id="albumLink" href="https://music.apple.com/us/album/soulboy/201549018" target="_blank" rel="noopener noreferrer">在 Apple Music 查看 ↗</a>
+            </div>
+            <div class="album-index" id="albumIndex" role="group" aria-label="选择专辑">
+              <button type="button" data-album="0" aria-current="true">01 Soulboy</button>
+              <button type="button" data-album="1">02 爱爱爱</button>
+              <button type="button" data-album="2">03 未来</button>
+              <button type="button" data-album="3">04 橙月</button>
+              <button type="button" data-album="4">05 可啦思刻</button>
+              <button type="button" data-album="5">06 15</button>
+              <button type="button" data-album="6">07 回到未来</button>
+              <button type="button" data-album="7">08 危险世界</button>
+              <button type="button" data-album="8">09 JTW 西游记</button>
+              <button type="button" data-album="9">10 The Dreamer</button>
+            </div>
+          </div>
+        </div>
+        <div class="album-scroll-steps" aria-hidden="true">
+          <div class="album-scroll-step"></div><div class="album-scroll-step"></div><div class="album-scroll-step"></div>
+          <div class="album-scroll-step"></div><div class="album-scroll-step"></div><div class="album-scroll-step"></div>
+          <div class="album-scroll-step"></div><div class="album-scroll-step"></div><div class="album-scroll-step"></div>
+        </div>
+        </div>
+        </div>
+        <p class="album-credit">专辑封面与发行年份参考 <a href="https://music.apple.com/us/artist/khalil-fong/201549024" target="_blank" rel="noopener noreferrer">Apple Music 方大同艺人页</a>。</p>
+      </div>
+    </section>
+
     <!-- 数字分身聊天区 -->
     <section id="twin" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">03 / SAY HELLO</p><h2 class="section-title">和小景怡聊聊 <span>✦</span></h2>
+        <p class="section-kicker">04 / SAY HELLO</p><h2 class="section-title">和小景怡聊聊 <span>✦</span></h2>
         <p class="twin-hint">这是我的数字分身，你可以问我关于名字、学校、专业、兴趣、爱好之类的问题～</p>
         <div class="chat-card card">
           <div class="chat-header">
@@ -194,7 +254,7 @@
     <!-- 学习与课程 -->
     <section id="courses" class="section">
       <div class="container">
-        <p class="section-kicker">04 / LEARNING</p><h2 class="section-title">学习与课程 <span>✳</span></h2>
+        <p class="section-kicker">05 / LEARNING</p><h2 class="section-title">学习与课程 <span>✳</span></h2>
         <div class="grid">
           <article class="card">
             <span class="card-emoji">🤖</span>
@@ -221,7 +281,7 @@
     <!-- 项目作品 -->
     <section id="projects" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">05 / MAKING</p><h2 class="section-title">项目作品 <span>✦</span></h2>
+        <p class="section-kicker">06 / MAKING</p><h2 class="section-title">项目作品 <span>✦</span></h2>
         <div class="grid">
           <article class="card project-card">
             <span class="card-emoji">🌸</span>
@@ -251,7 +311,7 @@
     <!-- 成长时间线 -->
     <section id="timeline" class="section">
       <div class="container">
-        <p class="section-kicker">06 / MY PATH</p><h2 class="section-title">成长时间线 <span>✳</span></h2>
+        <p class="section-kicker">07 / MY PATH</p><h2 class="section-title">成长时间线 <span>✳</span></h2>
         <ol class="timeline">
           <li class="timeline-item">
             <div class="timeline-dot">🎓</div>
@@ -281,7 +341,7 @@
     <!-- 联系方式 -->
     <section id="contact" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">07 / KEEP IN TOUCH</p><h2 class="section-title">留个联系方式 <span>✦</span></h2>
+        <p class="section-kicker">08 / KEEP IN TOUCH</p><h2 class="section-title">留个联系方式 <span>✦</span></h2>
         <div class="contact-card card">
           <p class="contact-intro">想认识我、一起学习，或者聊聊可爱又有趣的项目？</p>
           <ul class="contact-list">
@@ -304,5 +364,6 @@
   <script src="js/page-sky.js"></script>
   <script src="js/music.js"></script>
   <script src="js/music-snow.js"></script>
+  <script src="js/album-stack.js"></script>
 </body>
 </html>
