@@ -92,7 +92,79 @@ document.querySelectorAll('.course-card').forEach(card => {
   });
 });
 
-const revealEls = document.querySelectorAll('.card, .timeline-item, .section-title');
+// Floating timeline cards: a small pointer tilt and warm light that follows the cursor.
+const canFloatTimeline = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (canFloatTimeline) {
+  document.querySelectorAll('.timeline-card').forEach(card => {
+    let frame = 0;
+    card.addEventListener('pointerenter', () => card.classList.add('is-floating'));
+    card.addEventListener('pointermove', event => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+        card.style.setProperty('--ry', `${(x - .5) * 13}deg`);
+        card.style.setProperty('--rx', `${(.5 - y) * 11}deg`);
+        card.style.setProperty('--glow-x', `${x * 100}%`);
+        card.style.setProperty('--glow-y', `${y * 100}%`);
+        frame = 0;
+      });
+    });
+    card.addEventListener('pointerleave', () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      card.classList.remove('is-floating');
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+      card.style.setProperty('--glow-x', '50%');
+      card.style.setProperty('--glow-y', '50%');
+    });
+  });
+}
+
+// Touch alternative: press for a softer tilt, release or scroll to settle the card.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.timeline-card').forEach(card => {
+    let touchActive = false;
+    function resetTouchCard() {
+      touchActive = false;
+      card.classList.remove('is-touching');
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+      card.style.setProperty('--glow-x', '50%');
+      card.style.setProperty('--glow-y', '50%');
+    }
+    card.addEventListener('pointerdown', event => {
+      if (event.pointerType !== 'touch') return;
+      touchActive = true;
+      const rect = card.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+      card.classList.add('is-touching');
+      card.style.setProperty('--ry', `${(x - .5) * 7}deg`);
+      card.style.setProperty('--rx', `${(.5 - y) * 6}deg`);
+      card.style.setProperty('--glow-x', `${x * 100}%`);
+      card.style.setProperty('--glow-y', `${y * 100}%`);
+    }, { passive: true });
+    card.addEventListener('pointermove', event => {
+      if (!touchActive || event.pointerType !== 'touch') return;
+      const rect = card.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+      card.style.setProperty('--ry', `${(x - .5) * 7}deg`);
+      card.style.setProperty('--rx', `${(.5 - y) * 6}deg`);
+      card.style.setProperty('--glow-x', `${x * 100}%`);
+      card.style.setProperty('--glow-y', `${y * 100}%`);
+    }, { passive: true });
+    card.addEventListener('pointerup', resetTouchCard);
+    card.addEventListener('pointercancel', resetTouchCard);
+    card.addEventListener('lostpointercapture', resetTouchCard);
+  });
+}
+
+const revealEls = document.querySelectorAll('.card:not(.timeline-card), .timeline-item, .section-title');
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
     if (entry.isIntersecting) {
