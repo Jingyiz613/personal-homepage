@@ -45,13 +45,17 @@ const lamp = document.getElementById('lampToggle');
 const scene = document.getElementById('studioScene');
 const hero = document.getElementById('home');
 const lampFeedback = document.getElementById('lampFeedback');
+let lampFeedbackTimer;
 lamp.addEventListener('click', () => {
   const off = scene.classList.toggle('lamp-off');
   hero.classList.toggle('lamp-off', off);
   lamp.setAttribute('aria-pressed', String(!off));
   lamp.setAttribute('aria-label', off ? '打开台灯' : '关闭台灯');
-  lamp.querySelector('.lamp-button-text').textContent = off ? '台灯关了 · 点我打开' : '台灯亮着 · 点我切换';
+  lamp.querySelector('.lamp-button-text span').textContent = off ? '点亮台灯' : '按下开关';
   lampFeedback.textContent = off ? '灯先休息一下，星星还在 ✧' : '好啦，继续待一会儿吧 ✦';
+  lampFeedback.classList.add('is-visible');
+  clearTimeout(lampFeedbackTimer);
+  lampFeedbackTimer = setTimeout(() => lampFeedback.classList.remove('is-visible'), 2200);
 });
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -103,7 +107,7 @@ const messages = document.getElementById('chatMessages');
 const form = document.getElementById('chatForm');
 const input = document.getElementById('chatInput');
 const knowledge = [
-  { keys: ['名字', '叫什么', '姓名', '你是谁', '称呼'], answer: '我叫张景怡～一个爱玩、沉迷 R&B 音乐的大一女孩 😊' },
+  { keys: ['名字', '叫什么', '姓名', '你是谁', '称呼'], answer: '我叫张景怡～ESFJ，开朗活泼性情 😊' },
   { keys: ['学校', '学院', '大学', '未来技术学院'], answer: '我读于天津大学香港理工大学深圳未来技术学院。' },
   { keys: ['专业', '学什么', '计算机'], answer: '我的专业是计算机科学与技术，现在是一名大一新生。' },
   { keys: ['身份', '职业', '做什么的', '现在在做什么', '最近'], answer: '主页记录的是我作为大一新生学习计算机、尝试用 AI 和代码做作品的过程。至于此刻在做什么，我可没有实时消息哦～' },
