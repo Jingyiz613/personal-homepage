@@ -27,7 +27,6 @@
         <li><a href="#albums">专辑收藏</a></li>
         <li><a href="#twin">数字分身</a></li>
         <li><a href="#courses">学习与课程</a></li>
-        <li><a href="#projects">项目作品</a></li>
         <li><a href="#timeline">成长时间线</a></li>
         <li><a href="#contact">联系方式</a></li>
       </ul>
@@ -44,10 +43,10 @@
           <p class="time-greeting" id="timeGreeting">欢迎来到我的小工作室</p>
           <h1 class="hero-name">你好，我是<span>张景怡</span></h1>
           <p class="hero-subtitle">ESFJ，开朗活泼性情</p>
-          <p class="hero-intro">天津大学香港理工大学深圳未来技术学院 · 计算机科学与技术 · 大一新生。喜欢音乐（尤其 R&amp;B）、羽毛球和社交，正在用 AI 和代码一点点把想法变成作品。</p>
+          <p class="hero-intro">天津大学香港理工大学深圳未来技术学院 · 计算机科学与技术 · 大一新生。喜欢音乐（R&amp;B and hiphop）、羽毛球和社交，正在用 AI 和代码一点点把想法变成作品。</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#twin">和数字分身聊聊 <span aria-hidden="true">↗</span></a>
-            <a class="btn btn-ghost" href="#projects">看看我的作品</a>
+            <a class="btn btn-ghost" href="#timeline">看看成长足迹</a>
           </div>
           <p class="hero-footnote">在这里，灵感可以慢慢生长 <span aria-hidden="true">✳</span></p>
         </div>
@@ -124,7 +123,7 @@
             <article class="profile-note profile-note-likes">
               <span class="note-pin" aria-hidden="true"></span>
               <p class="note-label">02 / 喜欢的事</p>
-              <p>音乐（尤其喜欢 R&amp;B）、羽毛球、社交</p>
+              <p>音乐（R&amp;B and hiphop）、羽毛球、社交</p>
             </article>
             <details class="profile-note profile-note-secret">
               <summary><span class="note-label">03 / 关于我的小细节</span><span class="note-open">点开看看 <span aria-hidden="true">↗</span></span></summary>
@@ -183,17 +182,18 @@
       </div>
     </section>
 
-    <!-- 方大同正式专辑：卡片堆叠浏览 -->
+    <!-- 最爱歌手专辑：两套卡片堆叠书架 -->
     <section id="albums" class="section album-section">
       <div class="container">
         <p class="section-kicker">03 / ALBUM SHELF</p>
-        <h2 class="section-title">我最爱的歌手——方大同</h2>
-        <p class="album-intro">从 Soulboy 到 The Dreamer。把鼠标移到卡片上，向下滚动，逐张翻看封面。</p>
-        <div class="album-scroll" id="albumScroll" tabindex="0" role="region" aria-label="滚动翻阅方大同的十张专辑">
+        <h2 class="section-title">方大同 &amp; 蛋堡 Soft LIpapa</h2>
+        <p class="album-intro">两位喜欢的音乐人，两组按年份排列的专辑。把鼠标移到卡片上，向下滚动，逐张翻看封面。</p>
+        <h3 class="album-artist-title">方大同 <span>KHALIL FONG</span></h3>
+        <div class="album-scroll" data-album-shelf="khalil" tabindex="0" role="region" aria-label="滚动翻阅方大同的十张专辑">
         <div class="album-scroll-track">
         <div class="album-shelf card">
           <div class="album-stack-stage">
-            <div class="album-stack" id="albumStack" role="group" aria-label="方大同专辑封面卡片堆">
+            <div class="album-stack" role="group" aria-label="方大同专辑封面卡片堆">
               <button class="album-cover" type="button" data-album="0" aria-label="查看 Soulboy，2005 年"><img src="images/albums/soulboy.jpg" alt="Soulboy 专辑封面" width="600" height="600"></button>
               <button class="album-cover" type="button" data-album="1" aria-label="查看 爱爱爱，2006 年"><img src="images/albums/this-love.jpg" alt="爱爱爱专辑封面" width="600" height="600"></button>
               <button class="album-cover" type="button" data-album="2" aria-label="查看 未来，2007 年"><img src="images/albums/wonderland.jpg" alt="未来专辑封面" width="600" height="600"></button>
@@ -208,16 +208,16 @@
           </div>
           <div class="album-details">
             <p class="album-small-label">KHALIL FONG · ALBUMS</p>
-            <p class="album-count" id="albumCount">01 / 10</p>
-            <p class="album-year" id="albumYear">2005</p>
-            <h3 class="album-title" id="albumTitle" aria-live="polite">Soulboy</h3>
+            <p class="album-count">01 / 10</p>
+            <p class="album-year">2005</p>
+            <h3 class="album-title" aria-live="polite">Soulboy</h3>
             <p class="album-hint">在这里向下滚动翻页，也可以点击封面或专辑名。</p>
             <div class="album-controls" role="group" aria-label="切换专辑">
-              <button id="albumPrevious" type="button" aria-label="上一张专辑">←</button>
-              <button id="albumNext" type="button" aria-label="下一张专辑">→</button>
-              <a id="albumLink" href="https://music.apple.com/us/album/soulboy/201549018" target="_blank" rel="noopener noreferrer">在 Apple Music 查看 ↗</a>
+              <button class="album-previous" type="button" aria-label="上一张专辑">←</button>
+              <button class="album-next" type="button" aria-label="下一张专辑">→</button>
+              <a class="album-link" href="https://music.apple.com/us/album/soulboy/201549018" target="_blank" rel="noopener noreferrer">在 Apple Music 查看 ↗</a>
             </div>
-            <div class="album-index" id="albumIndex" role="group" aria-label="选择专辑">
+            <div class="album-index" role="group" aria-label="选择专辑">
               <button type="button" data-album="0" aria-current="true">01 Soulboy</button>
               <button type="button" data-album="1">02 爱爱爱</button>
               <button type="button" data-album="2">03 未来</button>
@@ -239,6 +239,52 @@
         </div>
         </div>
         <p class="album-credit">专辑封面与发行年份参考 <a href="https://music.apple.com/us/artist/khalil-fong/201549024" target="_blank" rel="noopener noreferrer">Apple Music 方大同艺人页</a>。</p>
+        <div id="soft-lipa-albums" class="album-companion">
+        <h3 class="album-artist-title">蛋堡 <span>Soft LIpapa</span></h3>
+        <div class="album-scroll" data-album-shelf="soft-lipa" tabindex="0" role="region" aria-label="滚动翻阅蛋堡的七张正式专辑">
+          <div class="album-scroll-track">
+            <div class="album-shelf card">
+              <div class="album-stack-stage">
+                <div class="album-stack" role="group" aria-label="蛋堡专辑封面卡片堆">
+                  <button class="album-cover" type="button" data-album="0" aria-label="查看 收敛水，2009 年"><img src="images/albums/soft-lipa-lotion.jpg" alt="收敛水专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="1" aria-label="查看 Winter Sweet，2009 年"><img src="images/albums/soft-lipa-winter-sweet.jpg" alt="Winter Sweet 专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="2" aria-label="查看 月光，2010 年"><img src="images/albums/soft-lipa-moonlight.jpg" alt="月光专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="3" aria-label="查看 Old School!，2011 年"><img src="images/albums/soft-lipa-old-school.jpg" alt="Old School! 专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="4" aria-label="查看 踩.脚.踏.车，2011 年"><img src="images/albums/soft-lipa-biking.jpg" alt="踩.脚.踏.车专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="5" aria-label="查看 你所不知道的杜振熙之内部整修，2013 年"><img src="images/albums/soft-lipa-renovate.jpg" alt="你所不知道的杜振熙之内部整修专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="6" aria-label="查看 家常音乐，2020 年"><img src="images/albums/soft-lipa-home-cookin.jpg" alt="家常音乐专辑封面" width="600" height="600"></button>
+                </div>
+              </div>
+              <div class="album-details">
+                <p class="album-small-label">SOFT LIPA · ALBUMS</p>
+                <p class="album-count">01 / 07</p>
+                <p class="album-year">2009</p>
+                <h3 class="album-title" aria-live="polite">收敛水</h3>
+                <p class="album-hint">在这里向下滚动翻页，也可以点击封面或专辑名。</p>
+                <div class="album-controls" role="group" aria-label="切换蛋堡专辑">
+                  <button class="album-previous" type="button" aria-label="上一张专辑">←</button>
+                  <button class="album-next" type="button" aria-label="下一张专辑">→</button>
+                  <a class="album-link" href="https://music.apple.com/us/album/%E6%94%B6%E6%96%82%E6%B0%B4/1178538439" target="_blank" rel="noopener noreferrer">在 Apple Music 查看 ↗</a>
+                </div>
+                <div class="album-index" role="group" aria-label="选择蛋堡专辑">
+                  <button type="button" data-album="0" aria-current="true">01 收敛水</button>
+                  <button type="button" data-album="1">02 Winter Sweet</button>
+                  <button type="button" data-album="2">03 月光</button>
+                  <button type="button" data-album="3">04 Old School!</button>
+                  <button type="button" data-album="4">05 踩.脚.踏.车</button>
+                  <button type="button" data-album="5">06 内部整修</button>
+                  <button type="button" data-album="6">07 家常音乐</button>
+                </div>
+              </div>
+            </div>
+            <div class="album-scroll-steps" aria-hidden="true">
+              <div class="album-scroll-step"></div><div class="album-scroll-step"></div><div class="album-scroll-step"></div>
+              <div class="album-scroll-step"></div><div class="album-scroll-step"></div><div class="album-scroll-step"></div>
+            </div>
+          </div>
+        </div>
+        <p class="album-credit">专辑封面与发行年份参考 <a href="https://music.apple.com/us/artist/soft-lipa/403689551" target="_blank" rel="noopener noreferrer">Apple Music 蛋堡艺人页</a>；《家常音乐》参考 <a href="https://rsdr.online/news/90" target="_blank" rel="noopener noreferrer">任性的人工作室</a>。</p>
+        </div>
       </div>
     </section>
 
@@ -347,40 +393,10 @@
       </div>
     </section>
 
-    <!-- 项目作品 -->
-    <section id="projects" class="section section-alt">
-      <div class="container">
-        <p class="section-kicker">06 / MAKING</p><h2 class="section-title">项目作品 <span>✦</span></h2>
-        <div class="grid">
-          <article class="card project-card">
-            <span class="card-emoji">🌸</span>
-            <h3>个人主页</h3>
-            <p class="card-meta">Vibe Coding 项目 · 进行中</p>
-            <p>你现在看到的这个网站，是我用自然语言 + AI 协作完成的第一个作品。</p>
-            <span class="badge">HTML/CSS/JS</span>
-          </article>
-          <article class="card project-card">
-            <span class="card-emoji">🔧</span>
-            <h3>独立迷你项目</h3>
-            <p class="card-meta">规划中</p>
-            <p>计划做一个与主页无关的小应用，练习把开发方法迁移到新问题。</p>
-            <span class="badge">待定</span>
-          </article>
-          <article class="card project-card">
-            <span class="card-emoji">🚀</span>
-            <h3>团队真实项目</h3>
-            <p class="card-meta">规划中</p>
-            <p>和同学组队解决一个真实问题，完整经历需求到 Demo 的全流程。</p>
-            <span class="badge">待定</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- 成长时间线 -->
     <section id="timeline" class="section">
       <div class="container">
-        <p class="section-kicker">07 / MY PATH</p><h2 class="section-title">成长时间线 <span>✳</span></h2>
+        <p class="section-kicker">06 / MY PATH</p><h2 class="section-title">成长时间线 <span>✳</span></h2>
         <ol class="timeline">
           <li class="timeline-item">
             <div class="timeline-dot">🎓</div>
@@ -410,9 +426,9 @@
     <!-- 联系方式 -->
     <section id="contact" class="section section-alt">
       <div class="container">
-        <p class="section-kicker">08 / KEEP IN TOUCH</p><h2 class="section-title">留个联系方式 <span>✦</span></h2>
+        <p class="section-kicker">07 / KEEP IN TOUCH</p><h2 class="section-title">留个联系方式 <span>✦</span></h2>
         <div class="contact-card card">
-          <p class="contact-intro">想认识我、一起学习，或者聊聊可爱又有趣的项目？</p>
+          <p class="contact-intro">想认识我、一起学习，或者聊聊音乐与生活里的小灵感？</p>
           <ul class="contact-list">
             <li><a href="mailto:987341910@qq.com">📧 邮箱：987341910@qq.com</a></li>
             <li><span>📱 电话 / 微信：18135204213</span></li>
