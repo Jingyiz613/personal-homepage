@@ -26,7 +26,6 @@
     const points = [];
     let mobileFrame = 0;
     let previousFrame = 0;
-    let lastPointTime = 0;
     let lastX = -40;
     let lastY = -40;
     let colorIndex = 0;
@@ -44,17 +43,18 @@
     function addPoint(x, y, time) {
       points.push({ x, y, life: 1, color: colors[colorIndex] });
       colorIndex = (colorIndex + 1) % colors.length;
-      if (points.length > 8) points.shift();
+      if (points.length > 6) points.shift();
       lastX = x;
       lastY = y;
-      lastPointTime = time;
       target.classList.add('is-active');
-      startMobileFrame();
+      if (mobileFrame) cancelAnimationFrame(mobileFrame);
+      mobileFrame = 0;
+      drawMobileTrail(time, true);
     }
 
-    function drawMobileTrail(time) {
+    function drawMobileTrail(time, immediate = false) {
       mobileFrame = 0;
-      if (previousFrame && time - previousFrame < 20) {
+      if (!immediate && previousFrame && time - previousFrame < 20) {
         startMobileFrame();
         return;
       }
@@ -85,7 +85,7 @@
         }
       }
 
-      for (const point of points) point.life -= elapsed / 285;
+      for (const point of points) point.life -= elapsed / 250;
       while (points[0]?.life <= 0) points.shift();
       if (points.length) startMobileFrame();
       else {
@@ -98,13 +98,14 @@
       const touch = event.touches[0];
       if (!touch) return;
       points.length = 0;
+      previousFrame = 0;
       addPoint(touch.clientX, touch.clientY, performance.now());
     }, { passive: true });
     window.addEventListener('touchmove', event => {
       const touch = event.touches[0];
       if (!touch) return;
       const now = performance.now();
-      if (now - lastPointTime < 20 || Math.hypot(touch.clientX - lastX, touch.clientY - lastY) < 4) return;
+      if (Math.hypot(touch.clientX - lastX, touch.clientY - lastY) < 3) return;
       addPoint(touch.clientX, touch.clientY, now);
     }, { passive: true });
     window.addEventListener('resize', resizeMobile, { passive: true });
