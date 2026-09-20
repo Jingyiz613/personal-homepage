@@ -9,6 +9,10 @@
   const count = document.getElementById('feedbackCount');
   const status = document.getElementById('feedbackStatus');
   const device = document.getElementById('feedbackDevice');
+  const publicOption = document.getElementById('feedbackPublic');
+  const list = document.getElementById('feedbackList');
+  const summary = document.getElementById('feedbackSummary');
+  const refreshButton = document.getElementById('feedbackRefresh');
   if (!dialog || !openButton || !form) return;
 
   const config = window.SUPABASE_CONFIG || {};
@@ -21,6 +25,96 @@
       })
     : null;
   let lastSuccessfulSubmit = 0;
+
+  const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  function formatDate(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? '' : dateFormatter.format(date);
+  }
+
+  function createTextElement(tag, className, text) {
+    const element = document.createElement(tag);
+    element.className = className;
+    element.textContent = text;
+    return element;
+  }
+
+  function renderFeedback(entries) {
+    list.replaceChildren();
+    summary.textContent = entries.length
+      ? `共展示最近 ${entries.length} 条公开留言`
+      : '还没有公开留言，欢迎留下第一张纸条。';
+
+    if (!entries.length) {
+      list.append(createTextElement('p', 'feedback-list-state', '留言簿还是空的，等你来留下第一句话 ✦'));
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    for (const entry of entries) {
+      const article = document.createElement('article');
+      article.className = 'feedback-entry';
+
+      const head = document.createElement('div');
+      head.className = 'feedback-entry-head';
+      head.append(
+        createTextElement('span', 'feedback-entry-name', entry.name?.trim() || '匿名访客'),
+        createTextElement('time', 'feedback-entry-date', formatDate(entry.created_at))
+      );
+      article.append(head, createTextElement('p', 'feedback-entry-message', entry.message));
+
+      if (entry.reply?.trim()) {
+        const reply = document.createElement('div');
+        reply.className = 'feedback-reply';
+        const replyHead = document.createElement('div');
+        replyHead.className = 'feedback-reply-head';
+        replyHead.append(
+          createTextElement('span', '', '景怡的回复'),
+          createTextElement('span', 'feedback-reply-date', formatDate(entry.reply_at))
+        );
+        reply.append(replyHead, createTextElement('p', '', entry.reply));
+        article.append(reply);
+      }
+      fragment.append(article);
+    }
+    list.append(fragment);
+  }
+
+  async function loadPublicFeedback() {
+    if (!list || !summary || !refreshButton) return;
+    if (!client) {
+      summary.textContent = '留言簿暂时无法连接';
+      list.replaceChildren(createTextElement('p', 'feedback-list-state', '数据库还在配置中，请稍后再来看看。'));
+      return;
+    }
+
+    list.setAttribute('aria-busy', 'true');
+    refreshButton.disabled = true;
+    refreshButton.textContent = '读取中…';
+    try {
+      const { data, error } = await client
+        .from('feedback')
+        .select('id,name,message,created_at,reply,reply_at')
+        .order('created_at', { ascending: false })
+        .limit(30);
+      if (error) throw error;
+      renderFeedback(data || []);
+    } catch (error) {
+      console.error('Public feedback loading failed:', error);
+      summary.textContent = '公开留言读取失败';
+      list.replaceChildren(createTextElement('p', 'feedback-list-state', '暂时没能打开留言簿，请稍后刷新。'));
+    } finally {
+      list.setAttribute('aria-busy', 'false');
+      refreshButton.disabled = false;
+      refreshButton.textContent = '刷新留言';
+    }
+  }
 
   function detectDevice() {
     const agent = navigator.userAgent.toLowerCase();
@@ -58,6 +152,7 @@
   }
 
   device.value = detectDevice();
+  refreshButton?.addEventListener('click', loadPublicFeedback);
   openButton.addEventListener('click', openDialog);
   closeButton.addEventListener('click', closeDialog);
   cancelButton.addEventListener('click', closeDialog);
@@ -94,7 +189,8 @@
       relation: document.getElementById('feedbackRelation').value,
       device: device.value,
       message: message.value.trim(),
-      version: 'V3'
+      version: 'V3',
+      is_public: Boolean(publicOption?.checked)
     };
 
     form.setAttribute('aria-busy', 'true');
@@ -106,8 +202,14 @@
       const { error } = await client.from('feedback').insert(payload);
       if (error) throw error;
       lastSuccessfulSubmit = Date.now();
+      const requestedPublicDisplay = payload.is_public;
       resetFormAfterSuccess();
-      setStatus('谢谢你的反馈！已经收到啦 ✦', 'success');
+      setStatus(
+        requestedPublicDisplay
+          ? '谢谢你的留言！审核通过后会出现在留言簿里 ✦'
+          : '谢谢你的反馈！这条内容只会由站长查看 ✦',
+        'success'
+      );
     } catch (error) {
       console.error('Feedback submission failed:', error);
       setStatus('这次没有成功送达，请检查网络后重试。你的内容还保留着。', 'error');
@@ -117,4 +219,6 @@
       submitButton.firstChild.textContent = '送出反馈 ';
     }
   });
+
+  loadPublicFeedback();
 })();

@@ -2,10 +2,11 @@
 
 这是我的 Vibe Coding 第一个项目。V2 第一阶段把页面改造成「夜晚轻像素创意工作室」，保留原有个人信息与内容。V2.5 统一了内容板块之间的过渡、卡片层次和聊天区细节。V2.6 将个人信息区改成工作室留言板式卡片。
 
-## V3 访客反馈（开发中）
+## V3 访客留言簿
 
 - 在联系方式前新增「给我一点反馈」入口，通过无跳转弹窗收集昵称、关系、设备和反馈内容。
-- 反馈写入 Supabase `feedback` 表；匿名访客只有新增权限，不能公开读取、修改或删除记录。
+- 留言写入 Supabase `feedback` 表；匿名访客可以新增，并且只能读取访客同意公开且经站长审核的安全字段，不能读取关系/设备信息，也不能修改或删除记录。
+- 新留言默认待审核。站长可在 Supabase Table Editor 勾选 `is_approved`，并通过 `reply`、`reply_at` 添加公开回复；历史留言保持私密，不会因升级被自动公开。
 - 表单包含必填校验、字数提示、设备识别、防重复点击、隐藏诱捕字段，以及明确的成功和失败状态。
 - 数据库表与 RLS 策略位于 `supabase/feedback.sql`。前端只允许配置 Project URL 和 publishable key，禁止使用 secret/service_role key。
 - 已完成真实 API 联调：匿名 INSERT 返回 `201 Created`，匿名 SELECT 返回 `401`，符合只收集、不公开反馈的权限目标。
@@ -116,12 +117,12 @@ personal-homepage/
 │   ├── music.js        # 音乐卡片交互与曲目文件映射
 │   ├── music-snow.js   # 音乐卡片的轻量飘雪背景
 │   ├── album-stack.js  # 两位歌手的独立专辑卡片堆叠与切换
-│   ├── feedback.js     # 反馈弹窗、校验与 Supabase 提交
+│   ├── feedback.js     # 公开留言列表、反馈弹窗、校验与 Supabase 提交
 │   ├── supabase-config.js # 公开的 Supabase 前端连接配置
 │   ├── stars.js        # 窗外星星动画
 │   └── page-sky.js     # 内容区夜空星点
 ├── supabase/
-│   └── feedback.sql    # feedback 表、RLS 与匿名 INSERT 策略
+│   └── feedback.sql    # feedback 表、审核字段、最小权限与 RLS 策略
 ├── docs/
 │   ├── ai-log.md       # AI 使用日志（课程要求）
 │   └── project-notes.md# 项目笔记与决策记录

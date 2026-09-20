@@ -478,15 +478,28 @@
       </div>
     </section>
 
-    <!-- 访客反馈入口：表单提交到 Supabase，反馈内容仅站长可在后台查看 -->
+    <!-- 访客留言簿：仅展示访客同意公开且经站长审核的内容 -->
     <section id="feedback" class="section section-alt feedback-section">
       <div class="container">
-        <p class="section-kicker">07 / LEAVE A NOTE</p><h2 class="section-title">给我一点反馈 <span>✦</span></h2>
+        <p class="section-kicker">07 / GUESTBOOK</p><h2 class="section-title">访客留言簿 <span>✦</span></h2>
+        <div class="feedback-board card" aria-labelledby="feedbackBoardTitle">
+          <div class="feedback-board-header">
+            <div>
+              <p class="feedback-overline">PUBLIC MESSAGES</p>
+              <h3 id="feedbackBoardTitle">收到的留言</h3>
+              <p class="feedback-board-summary" id="feedbackSummary">正在读取公开留言…</p>
+            </div>
+            <button class="btn btn-ghost feedback-refresh" id="feedbackRefresh" type="button">刷新留言</button>
+          </div>
+          <div class="feedback-list" id="feedbackList" aria-live="polite" aria-busy="true">
+            <p class="feedback-list-state">正在打开留言簿…</p>
+          </div>
+        </div>
         <div class="feedback-card card">
           <div class="feedback-copy">
             <p class="feedback-overline">A NOTE FOR THIS STUDIO</p>
             <h3>你的感受，会成为下一次更新的线索</h3>
-            <p>如果你发现哪里看不懂、不好用，或者有想继续看到的内容，欢迎留下一张小纸条。反馈不会公开展示，我会在后台认真查看。</p>
+            <p>如果你发现哪里看不懂、不好用，或者有想继续看到的内容，欢迎留下一张小纸条。你可以选择公开展示，所有留言都会先由我审核。</p>
             <ul class="feedback-prompts" aria-label="可以反馈的内容">
               <li>哪里让你印象最深？</li>
               <li>哪里不够清楚或不方便？</li>
@@ -528,7 +541,7 @@
         </div>
         <button class="feedback-close" id="feedbackClose" type="button" aria-label="关闭反馈表单">×</button>
       </header>
-      <p class="feedback-dialog-intro" id="feedbackDialogIntro">告诉我你的真实感受就好。反馈只会进入站长后台，不会在主页公开展示。</p>
+      <p class="feedback-dialog-intro" id="feedbackDialogIntro">告诉我你的真实感受就好。只有勾选公开并通过审核的留言才会显示；关系和设备始终仅站长可见。</p>
       <form class="feedback-form" id="feedbackForm">
         <div class="feedback-field">
           <label for="feedbackName">名字或昵称 <span>选填</span></label>
@@ -565,6 +578,10 @@
           </div>
           <textarea id="feedbackMessage" name="message" rows="6" minlength="2" maxlength="1000" required placeholder="比如：我最喜欢音乐角落；手机上专辑翻页有点难发现；希望下一版增加……"></textarea>
         </div>
+        <label class="feedback-public-option" for="feedbackPublic">
+          <input id="feedbackPublic" name="is_public" type="checkbox" checked>
+          <span><strong>同意公开展示这条留言</strong><small>只公开昵称、留言和日期；关系与设备不会公开。</small></span>
+        </label>
         <div class="feedback-honeypot" aria-hidden="true">
           <label for="feedbackWebsite">请不要填写这一项</label>
           <input id="feedbackWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
