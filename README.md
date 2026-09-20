@@ -9,7 +9,8 @@
 - 表单包含必填校验、字数提示、设备识别、防重复点击、隐藏诱捕字段，以及明确的成功和失败状态。
 - 数据库表与 RLS 策略位于 `supabase/feedback.sql`。前端只允许配置 Project URL 和 publishable key，禁止使用 secret/service_role key。
 - 已完成真实 API 联调：匿名 INSERT 返回 `201 Created`，匿名 SELECT 返回 `401`，符合只收集、不公开反馈的权限目标。
-- 完成数据库联调后，将通过 GitHub Pages 发布并分别进行电脑端与手机端线上测试。
+- 已通过 GitHub Pages 发布：[在线访问个人主页](https://jingyiz613.github.io/personal-homepage/)。
+- 公网页面已返回 `200` 并确认包含 V3 反馈区，仍需完成手机端实机验收。
 
 ## V2.96 窄屏台灯修正
 
@@ -81,6 +82,7 @@
 - 专业：计算机科学与技术，2026 级大一
 - 课程：Project-Based CST & AI Foundations（44511105）
 - 技术栈：HTML + CSS + JavaScript + Supabase（前端纯静态，无需构建工具）
+- 在线地址：https://jingyiz613.github.io/personal-homepage/
 
 ## 主要板块
 
@@ -144,4 +146,5 @@ Hero 使用为台灯互动重新排布桌椅的夜间工作室插画 `images/coz
 - [x] 一句话介绍已替换为正式版「ESFJ，开朗活泼性情」
 - [ ] 补充「别人最可能问的 3 个问题」的正式版（当前为暂用默认值）
 - [ ] 头像可替换为真实照片
-- [ ] V3 完成 Supabase 实际连接、线上提交验证与 GitHub Pages 部署
+- [x] V3 完成 Supabase 实际连接与 GitHub Pages 部署
+- [ ] 使用手机访问公网地址并提交一条反馈，完成最终实机验收
