@@ -17,7 +17,7 @@ create table if not exists public.feedback (
   ),
   version text not null default 'V3' check (version = 'V3'),
   is_public boolean not null default false,
-  is_approved boolean not null default false,
+  is_approved boolean not null default true,
   reply text,
   reply_at timestamptz,
   created_at timestamptz not null default now()
@@ -25,7 +25,8 @@ create table if not exists public.feedback (
 
 -- Upgrade an existing V3 table without exposing old private submissions.
 alter table public.feedback add column if not exists is_public boolean not null default false;
-alter table public.feedback add column if not exists is_approved boolean not null default false;
+alter table public.feedback add column if not exists is_approved boolean not null default true;
+alter table public.feedback alter column is_approved set default true;
 alter table public.feedback add column if not exists reply text;
 alter table public.feedback add column if not exists reply_at timestamptz;
 
@@ -60,7 +61,7 @@ to anon
 with check (
   version = 'V3'
   and char_length(btrim(message)) between 2 and 1000
-  and is_approved = false
+  and is_approved = true
   and reply is null
   and reply_at is null
 );
@@ -74,6 +75,6 @@ using (is_public = true and is_approved = true);
 
 -- Intentionally no UPDATE or DELETE policy for anonymous visitors.
 -- Owner workflow in Table Editor:
--- 1. Review the row and tick is_approved only when it is suitable for publication.
--- 2. Optionally fill reply and reply_at (for example: now()).
+-- Public opt-in submissions are published immediately. Set is_approved to false
+-- whenever a message needs to be hidden. Optionally fill reply and reply_at.
 -- Existing rows remain private because their visitors did not consent to publication.

@@ -206,7 +206,7 @@
       resetFormAfterSuccess();
       setStatus(
         requestedPublicDisplay
-          ? '谢谢你的留言！审核通过后会出现在留言簿里 ✦'
+          ? '谢谢你的留言！刷新留言簿就能看到它啦 ✦'
           : '谢谢你的反馈！这条内容只会由站长查看 ✦',
         'success'
       );
