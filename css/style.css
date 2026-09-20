@@ -405,14 +405,14 @@ main, .site-footer { position: relative; z-index: 1; }
   .hero-inner { min-height: 760px; padding-block: 66px clamp(260px, 62vw, 390px); display: block; }
   .eyebrow { font-size: .64rem; white-space: normal; }.hero-name { font-size: clamp(2.65rem, 11vw, 4rem); }
   .studio-scene { position: absolute; left: 50%; bottom: 0; width: 100vw; height: 100%; transform: translateX(-50%); border: 0; border-radius: 0; overflow: hidden; box-shadow: none; pointer-events: none; }.section { padding-block: 66px; }
-  .hero::before { content: ""; background: url("../images/cozy-studio-lamp-layout.png") 66% top / auto 100% no-repeat; -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 91%, transparent); mask-image: linear-gradient(to bottom, #000 0%, #000 91%, transparent); }
+  .hero::before { content: ""; background: url("../images/cozy-studio-lamp-layout.png") 94% bottom / auto 86% no-repeat; -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 91%, transparent); mask-image: linear-gradient(to bottom, #000 0%, #000 91%, transparent); }
   .hero::after { content: ""; opacity: 1; background: linear-gradient(to bottom, rgba(31, 28, 47, .66), rgba(31, 28, 47, .55) 48%, rgba(31, 28, 47, .15) 80%, rgba(31, 28, 47, .07)); }
   .studio-scene::before { content: none; }
   .starfield-desktop { display: none; }
   .starfield-mobile { display: block; z-index: 1; }
   .sky-motion { left: 37%; width: 57%; height: 48%; }
-  .lamp-button { left: 12%; right: auto; top: auto; bottom: 9%; width: 196px; height: 184px; pointer-events: auto; }
-  .lamp-feedback { left: 15%; right: auto; top: auto; bottom: 6%; }
+  .lamp-button { left: var(--mobile-lamp-x, 12%); right: auto; top: var(--mobile-lamp-y, 46%); bottom: auto; z-index: 2; width: 196px; height: 184px; pointer-events: auto; }
+  .lamp-feedback { left: var(--mobile-feedback-x, 15%); right: auto; top: var(--mobile-feedback-y, 70%); bottom: auto; }
   .grid { grid-template-columns: 1fr; }.card { padding: 24px; }
   .course-inner { height: 350px; }
   .course-symbol { margin-top: 24px; margin-bottom: 17px; }
@@ -452,7 +452,7 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 @media (max-width: 410px) {
   .container { width: calc(100% - 28px); }.hero-actions { gap: 9px; }.hero-actions .btn { padding-inline: 14px; font-size: .82rem; }
-  .lamp-button { left: 8%; right: auto; width: 184px; height: 172px; }
+  .lamp-button { width: 184px; height: 172px; }
 .chat-input { gap: 7px; }.chat-input input { font-size: .78rem; padding-inline: 9px; }.btn-send { padding-inline: 12px; font-size: .8rem; }
   .profile-note { padding: 16px 16px; }
   .album-stack-stage { min-height: 250px; }

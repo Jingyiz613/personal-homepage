@@ -46,6 +46,43 @@ const scene = document.getElementById('studioScene');
 const hero = document.getElementById('home');
 const lampFeedback = document.getElementById('lampFeedback');
 let lampFeedbackTimer;
+
+// Keep the mobile lamp attached to one point on the illustrated desk as the crop changes.
+const narrowHero = window.matchMedia('(max-width: 720px)');
+function positionMobileLamp() {
+  if (!narrowHero.matches) {
+    scene.style.removeProperty('--mobile-lamp-x');
+    scene.style.removeProperty('--mobile-lamp-y');
+    scene.style.removeProperty('--mobile-feedback-x');
+    scene.style.removeProperty('--mobile-feedback-y');
+    return;
+  }
+  const imageWidth = 1672;
+  const imageHeight = 941;
+  const scale = scene.clientHeight * .86 / imageHeight;
+  const offsetX = (scene.clientWidth - imageWidth * scale) * .94;
+  const offsetY = scene.clientHeight - imageHeight * scale;
+  const deskAnchorX = offsetX + 1200 * scale;
+  const deskAnchorY = offsetY + 565 * scale;
+  const lampWidth = lamp.offsetWidth;
+  const lampHeight = lamp.offsetHeight;
+  const lampX = deskAnchorX - lampWidth * (59 / 240);
+  const lampY = deskAnchorY - lampHeight * (198 / 225);
+  scene.style.setProperty('--mobile-lamp-x', `${lampX}px`);
+  scene.style.setProperty('--mobile-lamp-y', `${lampY}px`);
+  scene.style.setProperty('--mobile-feedback-x', `${lampX + 14}px`);
+  scene.style.setProperty('--mobile-feedback-y', `${lampY + lampHeight - 8}px`);
+}
+positionMobileLamp();
+let lampResizeFrame = 0;
+window.addEventListener('resize', () => {
+  if (lampResizeFrame) cancelAnimationFrame(lampResizeFrame);
+  lampResizeFrame = requestAnimationFrame(() => {
+    positionMobileLamp();
+    lampResizeFrame = 0;
+  });
+}, { passive: true });
+narrowHero.addEventListener('change', positionMobileLamp);
 lamp.addEventListener('click', () => {
   const off = scene.classList.toggle('lamp-off');
   hero.classList.toggle('lamp-off', off);

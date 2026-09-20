@@ -85,9 +85,15 @@
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    scale = Math.max(width / imageWidth, height / imageHeight);
-    offsetX = (width - imageWidth * scale) * (narrow.matches ? .66 : .5);
-    offsetY = (height - imageHeight * scale) * .5;
+    if (narrow.matches) {
+      scale = height * .86 / imageHeight;
+      offsetX = (width - imageWidth * scale) * .94;
+      offsetY = height - imageHeight * scale;
+    } else {
+      scale = Math.max(width / imageWidth, height / imageHeight);
+      offsetX = (width - imageWidth * scale) * .5;
+      offsetY = (height - imageHeight * scale) * .5;
+    }
     draw(0);
   }
   function loop(time) {
