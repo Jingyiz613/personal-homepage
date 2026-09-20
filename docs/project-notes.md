@@ -37,8 +37,8 @@
 - [ ] 移动端（手机宽度）布局正常、菜单可展开
 - [ ] 各锚点导航跳转正确
 - [ ] 无控制台报错
-- [ ] 本地提交后能在 Supabase Table Editor 找到记录
-- [ ] 匿名访客不能 SELECT、UPDATE 或 DELETE 反馈
+- [x] 本地匿名提交返回 `201 Created`，Supabase 已写入联调测试记录
+- [x] 匿名 SELECT 返回 `401`，访客不能读取全部反馈；未授予 UPDATE 或 DELETE
 - [ ] GitHub Pages 公网地址在电脑和手机上可用
 
 ## 四、待替换内容清单

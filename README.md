@@ -8,6 +8,7 @@
 - 反馈写入 Supabase `feedback` 表；匿名访客只有新增权限，不能公开读取、修改或删除记录。
 - 表单包含必填校验、字数提示、设备识别、防重复点击、隐藏诱捕字段，以及明确的成功和失败状态。
 - 数据库表与 RLS 策略位于 `supabase/feedback.sql`。前端只允许配置 Project URL 和 publishable key，禁止使用 secret/service_role key。
+- 已完成真实 API 联调：匿名 INSERT 返回 `201 Created`，匿名 SELECT 返回 `401`，符合只收集、不公开反馈的权限目标。
 - 完成数据库联调后，将通过 GitHub Pages 发布并分别进行电脑端与手机端线上测试。
 
 ## V2.96 窄屏台灯修正

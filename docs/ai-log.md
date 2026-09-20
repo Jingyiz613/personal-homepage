@@ -106,7 +106,8 @@
   - secret/service_role key 和数据库密码不得写入前端或提交 GitHub。
   - 暂不开放匿名 SELECT、UPDATE、DELETE，也不制作公开留言墙。
 - **待人工完成**：
-  - 创建 Supabase 项目、运行 SQL、提供 Project URL 与 publishable key，之后进行真实写入测试。
+  - 已创建 Supabase 项目并运行 SQL；Project URL 与 publishable key 已接入前端。
+  - 匿名 INSERT 联调返回 `201 Created`，匿名 SELECT 验证返回 `401`，权限符合课程目标。
   - 确认发布前如何处理公开联系方式与站内完整音乐文件。
 
 ---
