@@ -561,7 +561,8 @@ main, .site-footer { position: relative; z-index: 1; }
 .fluid-cursor-core.is-active { opacity: .92; }
 .fluid-cursor-core.is-pressed { width: 15px; height: 15px; background: rgba(216, 168, 193, .5); }
 @media (hover: none), (pointer: coarse) {
-  .fluid-cursor, .fluid-cursor-core { display: none !important; }
+  .fluid-cursor { mix-blend-mode: normal; transition-duration: .12s; }
+  .fluid-cursor-core { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fluid-cursor, .fluid-cursor-core { display: none !important; }

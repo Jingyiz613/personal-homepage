@@ -3,9 +3,119 @@
   const canvas = document.getElementById('fluidCursor');
   const core = document.getElementById('fluidCursorCore');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  // Touch scrolling must stay native and light; the fluid trail is desktop-only.
-  if (!canvas || !core || !finePointer.matches || reducedMotion.matches) return;
+  if (!canvas || !core || reducedMotion.matches) return;
+
+  // Mobile uses a separate, short 30 FPS trail: no particles, blur, gradients,
+  // or always-on animation loop. Native scrolling remains fully passive.
+  if (!finePointer.matches) {
+    if (coarsePointer.matches) initMobileTrail(canvas);
+    return;
+  }
+
+  function initMobileTrail(target) {
+    const mobileContext = target.getContext('2d');
+    if (!mobileContext) return;
+    const colors = [
+      [255, 218, 156],
+      [216, 168, 193],
+      [184, 211, 181],
+      [200, 182, 237]
+    ];
+    const points = [];
+    let mobileFrame = 0;
+    let previousFrame = 0;
+    let lastPointTime = 0;
+    let lastX = -40;
+    let lastY = -40;
+    let colorIndex = 0;
+
+    function resizeMobile() {
+      target.width = window.innerWidth;
+      target.height = window.innerHeight;
+      mobileContext.setTransform(1, 0, 0, 1, 0, 0);
+    }
+
+    function startMobileFrame() {
+      if (!mobileFrame) mobileFrame = requestAnimationFrame(drawMobileTrail);
+    }
+
+    function addPoint(x, y, time) {
+      points.push({ x, y, life: 1, color: colors[colorIndex] });
+      colorIndex = (colorIndex + 1) % colors.length;
+      if (points.length > 10) points.shift();
+      lastX = x;
+      lastY = y;
+      lastPointTime = time;
+      target.classList.add('is-active');
+      startMobileFrame();
+    }
+
+    function drawMobileTrail(time) {
+      mobileFrame = 0;
+      if (previousFrame && time - previousFrame < 32) {
+        startMobileFrame();
+        return;
+      }
+      const elapsed = previousFrame ? Math.min(time - previousFrame, 50) : 16;
+      previousFrame = time;
+      mobileContext.clearRect(0, 0, target.width, target.height);
+      mobileContext.lineCap = 'round';
+      mobileContext.lineJoin = 'round';
+
+      if (points.length === 1) {
+        const point = points[0];
+        const [r, g, b] = point.color;
+        mobileContext.beginPath();
+        mobileContext.arc(point.x, point.y, 2.6, 0, Math.PI * 2);
+        mobileContext.fillStyle = `rgba(${r}, ${g}, ${b}, ${point.life * .34})`;
+        mobileContext.fill();
+      } else {
+        for (let index = 1; index < points.length; index++) {
+          const previous = points[index - 1];
+          const point = points[index];
+          const [r, g, b] = point.color;
+          mobileContext.beginPath();
+          mobileContext.moveTo(previous.x, previous.y);
+          mobileContext.lineTo(point.x, point.y);
+          mobileContext.lineWidth = 5;
+          mobileContext.strokeStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(previous.life, point.life) * .28})`;
+          mobileContext.stroke();
+        }
+      }
+
+      for (const point of points) point.life -= elapsed / 260;
+      while (points[0]?.life <= 0) points.shift();
+      if (points.length) startMobileFrame();
+      else {
+        previousFrame = 0;
+        target.classList.remove('is-active');
+      }
+    }
+
+    window.addEventListener('pointerdown', event => {
+      if (event.pointerType !== 'touch') return;
+      points.length = 0;
+      addPoint(event.clientX, event.clientY, performance.now());
+    }, { passive: true });
+    window.addEventListener('pointermove', event => {
+      if (event.pointerType !== 'touch') return;
+      const now = performance.now();
+      if (now - lastPointTime < 33 || Math.hypot(event.clientX - lastX, event.clientY - lastY) < 6) return;
+      addPoint(event.clientX, event.clientY, now);
+    }, { passive: true });
+    window.addEventListener('resize', resizeMobile, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) return;
+      points.length = 0;
+      if (mobileFrame) cancelAnimationFrame(mobileFrame);
+      mobileFrame = 0;
+      previousFrame = 0;
+      target.classList.remove('is-active');
+    });
+    resizeMobile();
+  }
 
   const context = canvas.getContext('2d');
   if (!context) return;
