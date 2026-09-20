@@ -3,9 +3,9 @@
   const canvas = document.getElementById('fluidCursor');
   const core = document.getElementById('fluidCursorCore');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (!canvas || !core || (!finePointer.matches && !coarsePointer.matches) || reducedMotion.matches) return;
+  // Touch scrolling must stay native and light; the fluid trail is desktop-only.
+  if (!canvas || !core || !finePointer.matches || reducedMotion.matches) return;
 
   const context = canvas.getContext('2d');
   if (!context) return;
@@ -18,9 +18,9 @@
   const particles = [];
   const ribbon = [];
   const ripples = [];
-  const particleLimit = finePointer.matches ? 96 : 54;
-  const ribbonLimit = finePointer.matches ? 16 : 10;
-  const ribbonWidth = finePointer.matches ? 12 : 8;
+  const particleLimit = 96;
+  const ribbonLimit = 16;
+  const ribbonWidth = 12;
   const pointer = { x: -40, y: -40, targetX: -40, targetY: -40, lastX: -40, lastY: -40, visible: false };
   let width = 0;
   let height = 0;
@@ -117,7 +117,7 @@
     context.strokeStyle = gradient;
     context.stroke();
     context.globalAlpha = Math.min(1, last.life) * .9;
-    context.lineWidth = finePointer.matches ? 3.5 : 2.5;
+    context.lineWidth = 3.5;
     context.strokeStyle = 'rgba(255, 239, 207, .34)';
     context.stroke();
     context.globalAlpha = 1;
@@ -161,10 +161,6 @@
     context.globalCompositeOperation = 'source-over';
     context.shadowBlur = 0;
 
-    if (!finePointer.matches && !pointer.visible && particles.length === 0 && ribbon.length === 0 && ripples.length === 0) {
-      canvas.classList.remove('is-active');
-    }
-
   }
 
   function setVisible(visible) {
@@ -204,42 +200,6 @@
   }, { passive: true });
   window.addEventListener('pointerup', () => core.classList.remove('is-pressed'), { passive: true });
 
-  let touchStart = null;
-  window.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'touch') return;
-    touchStart = { x: event.clientX, y: event.clientY, time: performance.now() };
-    pointer.lastX = event.clientX;
-    pointer.lastY = event.clientY;
-    pointer.visible = true;
-    canvas.classList.add('is-active');
-  }, { passive: true });
-  window.addEventListener('pointermove', event => {
-    if (event.pointerType !== 'touch' || !touchStart) return;
-    const x = event.clientX;
-    const y = event.clientY;
-    const moveX = x - pointer.lastX;
-    const moveY = y - pointer.lastY;
-    ribbon.push({ x, y, life: 1 });
-    if (ribbon.length > ribbonLimit) ribbon.shift();
-    if (Math.hypot(moveX, moveY) > 3) splat(x, y, moveX, moveY);
-    pointer.lastX = x;
-    pointer.lastY = y;
-  }, { passive: true });
-  window.addEventListener('pointerup', event => {
-    if (event.pointerType !== 'touch' || !touchStart) return;
-    const distance = Math.hypot(event.clientX - touchStart.x, event.clientY - touchStart.y);
-    const elapsed = performance.now() - touchStart.time;
-    if (distance < 14 && elapsed < 420) {
-      ripples.push({ x: event.clientX, y: event.clientY, progress: 0 });
-      if (ripples.length > 4) ripples.shift();
-    }
-    touchStart = null;
-    pointer.visible = false;
-  }, { passive: true });
-  window.addEventListener('pointercancel', () => {
-    touchStart = null;
-    pointer.visible = false;
-  }, { passive: true });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) setVisible(false);
   });

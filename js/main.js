@@ -103,6 +103,7 @@ document.querySelectorAll('.course-card').forEach(card => {
   const courseName = card.querySelector('.course-title').textContent.replace(/\s+/g, ' ').trim();
   let hovered = false;
   let manuallyFlipped = false;
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   function updateFlip() {
     const flipped = hovered || manuallyFlipped;
     card.classList.toggle('is-flipped', flipped);
@@ -112,18 +113,19 @@ document.querySelectorAll('.course-card').forEach(card => {
     back.setAttribute('aria-hidden', String(!flipped));
   }
   card.addEventListener('pointerenter', event => {
-    if (event.pointerType !== 'mouse') return;
+    if (!supportsHover || event.pointerType !== 'mouse') return;
     manuallyFlipped = false;
     hovered = true;
     updateFlip();
   });
   card.addEventListener('pointerleave', event => {
-    if (event.pointerType !== 'mouse') return;
+    if (!supportsHover || event.pointerType !== 'mouse') return;
     hovered = false;
     updateFlip();
   });
   button.addEventListener('click', event => {
-    if (event.pointerType === 'mouse' || (event.detail > 0 && hovered)) return;
+    // Fine pointers use hover; touch and keyboard activation toggle persistently.
+    if (supportsHover && event.pointerType !== 'touch' && event.pointerType !== 'pen' && event.detail > 0) return;
     manuallyFlipped = !manuallyFlipped;
     updateFlip();
   });

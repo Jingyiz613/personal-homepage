@@ -455,10 +455,13 @@ main, .site-footer { position: relative; z-index: 1; }
   .starfield-desktop { display: none; }
   .starfield-mobile { display: block; z-index: 1; }
   .sky-motion { left: 37%; width: 57%; height: 48%; }
-  .lamp-button { left: var(--mobile-lamp-x, 12%); right: auto; top: var(--mobile-lamp-y, 46%); bottom: auto; z-index: 2; width: 196px; height: 184px; pointer-events: auto; }
+  .hero-copy { pointer-events: none; }
+  .hero-copy a, .hero-copy button { pointer-events: auto; }
+  .lamp-button { left: var(--mobile-lamp-x, 12%); right: auto; top: var(--mobile-lamp-y, 46%); bottom: auto; z-index: 2; width: 196px; height: 184px; pointer-events: auto; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
   .lamp-feedback { left: var(--mobile-feedback-x, 15%); right: auto; top: var(--mobile-feedback-y, 70%); bottom: auto; }
   .grid { grid-template-columns: 1fr; }.card { padding: 24px; }
   .course-inner { height: 350px; }
+  .course-flip { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
   .course-symbol { margin-top: 24px; margin-bottom: 17px; }
   .course-back-label { margin-top: 23px; }
   .music-section { padding-top: 34px; }
@@ -558,7 +561,7 @@ main, .site-footer { position: relative; z-index: 1; }
 .fluid-cursor-core.is-active { opacity: .92; }
 .fluid-cursor-core.is-pressed { width: 15px; height: 15px; background: rgba(216, 168, 193, .5); }
 @media (hover: none), (pointer: coarse) {
-  .fluid-cursor-core { display: none !important; }
+  .fluid-cursor, .fluid-cursor-core { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fluid-cursor, .fluid-cursor-core { display: none !important; }
