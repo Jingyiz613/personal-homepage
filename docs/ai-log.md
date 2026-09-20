@@ -90,6 +90,27 @@
 
 ---
 
+### V3 访客反馈 · 后端设计与前端实现
+
+- **时间**：2026-09-20
+- **我的提问（prompt 摘要）**：
+  - 阅读老师的 V3 课件，按照课程流程构建反馈数据库、访客反馈入口并准备发布到 GitHub Pages。
+- **AI 输出摘要**：
+  - 根据课件将 V3 范围限定为「匿名访客只提交反馈，站长在 Supabase 后台查看」，不公开读取全部反馈。
+  - 新增夜间便签风格的反馈入口与无跳转弹窗，收集昵称、关系、设备和反馈正文。
+  - 新增表单校验、字数提示、设备识别、提交中状态、防重复点击、隐藏诱捕字段及成功/失败提示。
+  - 新增 `supabase/feedback.sql`，包含 `feedback` 表、RLS 和匿名 INSERT-only 策略。
+  - 新增 `js/supabase-config.js` 占位配置，等待站长创建 Supabase 项目后填写 Project URL 与 publishable key。
+- **安全判断**：
+  - publishable key 可以进入浏览器代码，但安全边界必须由 RLS 提供。
+  - secret/service_role key 和数据库密码不得写入前端或提交 GitHub。
+  - 暂不开放匿名 SELECT、UPDATE、DELETE，也不制作公开留言墙。
+- **待人工完成**：
+  - 创建 Supabase 项目、运行 SQL、提供 Project URL 与 publishable key，之后进行真实写入测试。
+  - 确认发布前如何处理公开联系方式与站内完整音乐文件。
+
+---
+
 ## 使用规范自检
 
 - [x] 关键交互有记录

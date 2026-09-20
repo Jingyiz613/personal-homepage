@@ -2,6 +2,14 @@
 
 这是我的 Vibe Coding 第一个项目。V2 第一阶段把页面改造成「夜晚轻像素创意工作室」，保留原有个人信息与内容。V2.5 统一了内容板块之间的过渡、卡片层次和聊天区细节。V2.6 将个人信息区改成工作室留言板式卡片。
 
+## V3 访客反馈（开发中）
+
+- 在联系方式前新增「给我一点反馈」入口，通过无跳转弹窗收集昵称、关系、设备和反馈内容。
+- 反馈写入 Supabase `feedback` 表；匿名访客只有新增权限，不能公开读取、修改或删除记录。
+- 表单包含必填校验、字数提示、设备识别、防重复点击、隐藏诱捕字段，以及明确的成功和失败状态。
+- 数据库表与 RLS 策略位于 `supabase/feedback.sql`。前端只允许配置 Project URL 和 publishable key，禁止使用 secret/service_role key。
+- 完成数据库联调后，将通过 GitHub Pages 发布并分别进行电脑端与手机端线上测试。
+
 ## V2.96 窄屏台灯修正
 
 - 窄屏台灯改为图片坐标锚定：根据背景原始尺寸、Hero 高度、86% 缩放和 94% 横向裁切实时计算桌面位置，再将 SVG 底座接触点绑定到原图书桌坐标。屏幕持续变窄时，台灯、桌面、反馈和星星会使用同一套缩放偏移。
@@ -71,7 +79,7 @@
 - 学校：天津大学香港理工大学深圳未来技术学院
 - 专业：计算机科学与技术，2026 级大一
 - 课程：Project-Based CST & AI Foundations（44511105）
-- 技术栈：HTML + CSS + JavaScript（纯静态，无需构建工具）
+- 技术栈：HTML + CSS + JavaScript + Supabase（前端纯静态，无需构建工具）
 
 ## 主要板块
 
@@ -80,7 +88,7 @@
 - 音乐角落：卡带视觉、两首本地音频切换、播放/暂停、转盘与波形动画
 - 专辑书架：方大同十张与蛋堡七张正式专辑封面卡片堆叠浏览
 - 数字分身聊天区：关键词问答、快捷问题、随机问我、typing 提示与自动滚动
-- 学习与课程、成长时间线、联系方式
+- 学习与课程、成长时间线、访客反馈、联系方式
 
 ## 目录结构
 
@@ -99,8 +107,12 @@ personal-homepage/
 │   ├── music.js        # 音乐卡片交互与曲目文件映射
 │   ├── music-snow.js   # 音乐卡片的轻量飘雪背景
 │   ├── album-stack.js  # 两位歌手的独立专辑卡片堆叠与切换
+│   ├── feedback.js     # 反馈弹窗、校验与 Supabase 提交
+│   ├── supabase-config.js # 公开的 Supabase 前端连接配置
 │   ├── stars.js        # 窗外星星动画
 │   └── page-sky.js     # 内容区夜空星点
+├── supabase/
+│   └── feedback.sql    # feedback 表、RLS 与匿名 INSERT 策略
 ├── docs/
 │   ├── ai-log.md       # AI 使用日志（课程要求）
 │   └── project-notes.md# 项目笔记与决策记录
@@ -110,6 +122,13 @@ personal-homepage/
 ## 如何本地预览
 
 直接双击 `index.html`，或用任意静态服务器打开。也可以用浏览器打开文件路径。
+
+反馈数据库接入步骤：
+
+1. 在 Supabase SQL Editor 中完整运行 `supabase/feedback.sql`。
+2. 从 Supabase 项目的 Connect 或 API Keys 页面复制 Project URL 和 publishable key。
+3. 将两项填入 `js/supabase-config.js`；不要在项目中写入数据库密码、secret key 或 service_role key。
+4. 本地提交测试反馈，并在 Supabase Table Editor 中确认记录真实存在。
 
 台灯仅改变插画中的暖光，不影响页面正文亮度，也不会播放声音。欢迎语依据访客浏览器本地时间显示，并不表示站长当前的实时活动。页面支持 `prefers-reduced-motion`。
 
@@ -124,4 +143,4 @@ Hero 使用为台灯互动重新排布桌椅的夜间工作室插画 `images/coz
 - [x] 一句话介绍已替换为正式版「ESFJ，开朗活泼性情」
 - [ ] 补充「别人最可能问的 3 个问题」的正式版（当前为暂用默认值）
 - [ ] 头像可替换为真实照片
-- [ ] V3 在联系方式前加入带后端存储的访客留言簿，并部署网站
+- [ ] V3 完成 Supabase 实际连接、线上提交验证与 GitHub Pages 部署
