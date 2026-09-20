@@ -9,7 +9,7 @@
 
   // Mobile uses a separate, short 30 FPS trail: no particles, blur, gradients,
   // or always-on animation loop. Native scrolling remains fully passive.
-  if (!finePointer.matches) {
+  if (coarsePointer.matches || !finePointer.matches) {
     if (coarsePointer.matches) initMobileTrail(canvas);
     return;
   }
@@ -68,8 +68,8 @@
         const point = points[0];
         const [r, g, b] = point.color;
         mobileContext.beginPath();
-        mobileContext.arc(point.x, point.y, 2.6, 0, Math.PI * 2);
-        mobileContext.fillStyle = `rgba(${r}, ${g}, ${b}, ${point.life * .34})`;
+        mobileContext.arc(point.x, point.y, 3.4, 0, Math.PI * 2);
+        mobileContext.fillStyle = `rgba(${r}, ${g}, ${b}, ${point.life * .62})`;
         mobileContext.fill();
       } else {
         for (let index = 1; index < points.length; index++) {
@@ -79,13 +79,13 @@
           mobileContext.beginPath();
           mobileContext.moveTo(previous.x, previous.y);
           mobileContext.lineTo(point.x, point.y);
-          mobileContext.lineWidth = 5;
-          mobileContext.strokeStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(previous.life, point.life) * .28})`;
+          mobileContext.lineWidth = 6;
+          mobileContext.strokeStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(previous.life, point.life) * .52})`;
           mobileContext.stroke();
         }
       }
 
-      for (const point of points) point.life -= elapsed / 260;
+      for (const point of points) point.life -= elapsed / 340;
       while (points[0]?.life <= 0) points.shift();
       if (points.length) startMobileFrame();
       else {
@@ -94,16 +94,18 @@
       }
     }
 
-    window.addEventListener('pointerdown', event => {
-      if (event.pointerType !== 'touch') return;
+    window.addEventListener('touchstart', event => {
+      const touch = event.touches[0];
+      if (!touch) return;
       points.length = 0;
-      addPoint(event.clientX, event.clientY, performance.now());
+      addPoint(touch.clientX, touch.clientY, performance.now());
     }, { passive: true });
-    window.addEventListener('pointermove', event => {
-      if (event.pointerType !== 'touch') return;
+    window.addEventListener('touchmove', event => {
+      const touch = event.touches[0];
+      if (!touch) return;
       const now = performance.now();
-      if (now - lastPointTime < 33 || Math.hypot(event.clientX - lastX, event.clientY - lastY) < 6) return;
-      addPoint(event.clientX, event.clientY, now);
+      if (now - lastPointTime < 33 || Math.hypot(touch.clientX - lastX, touch.clientY - lastY) < 6) return;
+      addPoint(touch.clientX, touch.clientY, now);
     }, { passive: true });
     window.addEventListener('resize', resizeMobile, { passive: true });
     document.addEventListener('visibilitychange', () => {
