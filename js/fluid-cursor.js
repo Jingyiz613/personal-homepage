@@ -7,7 +7,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (!canvas || !core || reducedMotion.matches) return;
 
-  // Mobile uses a separate, short 30 FPS trail: no particles, blur, gradients,
+  // Mobile uses a separate, short ~50 FPS trail: no particles, blur, gradients,
   // or always-on animation loop. Native scrolling remains fully passive.
   if (coarsePointer.matches || !finePointer.matches) {
     if (coarsePointer.matches) initMobileTrail(canvas);
@@ -44,7 +44,7 @@
     function addPoint(x, y, time) {
       points.push({ x, y, life: 1, color: colors[colorIndex] });
       colorIndex = (colorIndex + 1) % colors.length;
-      if (points.length > 10) points.shift();
+      if (points.length > 8) points.shift();
       lastX = x;
       lastY = y;
       lastPointTime = time;
@@ -54,7 +54,7 @@
 
     function drawMobileTrail(time) {
       mobileFrame = 0;
-      if (previousFrame && time - previousFrame < 32) {
+      if (previousFrame && time - previousFrame < 20) {
         startMobileFrame();
         return;
       }
@@ -85,7 +85,7 @@
         }
       }
 
-      for (const point of points) point.life -= elapsed / 340;
+      for (const point of points) point.life -= elapsed / 285;
       while (points[0]?.life <= 0) points.shift();
       if (points.length) startMobileFrame();
       else {
@@ -104,7 +104,7 @@
       const touch = event.touches[0];
       if (!touch) return;
       const now = performance.now();
-      if (now - lastPointTime < 33 || Math.hypot(touch.clientX - lastX, touch.clientY - lastY) < 6) return;
+      if (now - lastPointTime < 20 || Math.hypot(touch.clientX - lastX, touch.clientY - lastY) < 4) return;
       addPoint(touch.clientX, touch.clientY, now);
     }, { passive: true });
     window.addEventListener('resize', resizeMobile, { passive: true });
