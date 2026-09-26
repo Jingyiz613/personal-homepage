@@ -44,34 +44,20 @@ setInterval(updateGreeting, 60 * 1000);
 const lamp = document.getElementById('lampToggle');
 const scene = document.getElementById('studioScene');
 const hero = document.getElementById('home');
+const mobileLampStage = document.getElementById('mobileLampStage');
 const lampFeedback = document.getElementById('lampFeedback');
 let lampFeedbackTimer;
 
-// Keep the mobile lamp attached to one point on the illustrated desk as the crop changes.
+// Mobile gets a dedicated shelf so the lamp never collides with copy or floats over the room.
 const narrowHero = window.matchMedia('(max-width: 720px)');
 function positionMobileLamp() {
-  if (!narrowHero.matches) {
-    scene.style.removeProperty('--mobile-lamp-x');
-    scene.style.removeProperty('--mobile-lamp-y');
-    scene.style.removeProperty('--mobile-feedback-x');
-    scene.style.removeProperty('--mobile-feedback-y');
+  if (narrowHero.matches) {
+    if (lamp.parentElement !== mobileLampStage) mobileLampStage.append(lamp, lampFeedback);
+    mobileLampStage.setAttribute('aria-hidden', 'false');
     return;
   }
-  const imageWidth = 1672;
-  const imageHeight = 941;
-  const scale = scene.clientHeight * .86 / imageHeight;
-  const offsetX = (scene.clientWidth - imageWidth * scale) * .94;
-  const offsetY = scene.clientHeight - imageHeight * scale;
-  const deskAnchorX = offsetX + 1200 * scale;
-  const deskAnchorY = offsetY + 565 * scale;
-  const lampWidth = lamp.offsetWidth;
-  const lampHeight = lamp.offsetHeight;
-  const lampX = deskAnchorX - lampWidth * (59 / 240);
-  const lampY = deskAnchorY - lampHeight * (198 / 225);
-  scene.style.setProperty('--mobile-lamp-x', `${lampX}px`);
-  scene.style.setProperty('--mobile-lamp-y', `${lampY}px`);
-  scene.style.setProperty('--mobile-feedback-x', `${lampX + 14}px`);
-  scene.style.setProperty('--mobile-feedback-y', `${lampY + lampHeight - 8}px`);
+  if (lamp.parentElement !== scene) scene.append(lamp, lampFeedback);
+  mobileLampStage.setAttribute('aria-hidden', 'true');
 }
 positionMobileLamp();
 let lampResizeFrame = 0;
@@ -86,6 +72,7 @@ narrowHero.addEventListener('change', positionMobileLamp);
 lamp.addEventListener('click', () => {
   const off = scene.classList.toggle('lamp-off');
   hero.classList.toggle('lamp-off', off);
+  lamp.classList.toggle('lamp-off', off);
   lamp.setAttribute('aria-pressed', String(!off));
   lamp.setAttribute('aria-label', off ? '打开台灯' : '关闭台灯');
   lamp.querySelector('.lamp-button-text span').textContent = off ? '点亮台灯' : '按下开关';

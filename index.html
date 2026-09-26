@@ -53,6 +53,9 @@
           </div>
           <p class="hero-footnote">在这里，灵感可以慢慢生长 <span aria-hidden="true">✳</span></p>
         </div>
+        <div class="mobile-lamp-stage" id="mobileLampStage" aria-hidden="true">
+          <span class="mobile-lamp-shelf" aria-hidden="true"></span>
+        </div>
         <div class="studio-scene" id="studioScene">
           <canvas class="starfield starfield-mobile" id="mobileStarfield" aria-hidden="true"></canvas>
           <div class="sky-motion" aria-hidden="true">
@@ -190,7 +193,7 @@
       <div class="container">
         <p class="section-kicker">03 / ALBUM SHELF</p>
         <h2 class="section-title">方大同 &amp; 蛋堡 Soft LIpapa</h2>
-        <p class="album-intro">两位喜欢的音乐人，两组按年份排列的专辑。把鼠标移到卡片上，向下滚动，逐张翻看封面。</p>
+        <p class="album-intro">两位喜欢的音乐人，两组按年份排列的专辑。电脑端用滚轮翻页，手机端左右滑动封面。</p>
         <h3 class="album-artist-title">方大同 <span>KHALIL FONG</span></h3>
         <div class="album-scroll" data-album-shelf="khalil" tabindex="0" role="region" aria-label="滚动翻阅方大同的十张专辑">
         <div class="album-scroll-track">
@@ -198,15 +201,15 @@
           <div class="album-stack-stage">
             <div class="album-stack" role="group" aria-label="方大同专辑封面卡片堆">
               <button class="album-cover" type="button" data-album="0" aria-label="查看 Soulboy，2005 年"><img src="images/albums/soulboy.jpg" alt="Soulboy 专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="1" aria-label="查看 爱爱爱，2006 年"><img src="images/albums/this-love.jpg" alt="爱爱爱专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="2" aria-label="查看 未来，2007 年"><img src="images/albums/wonderland.jpg" alt="未来专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="3" aria-label="查看 橙月，2008 年"><img src="images/albums/orange-moon.jpg" alt="橙月专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="4" aria-label="查看 可啦思刻，2009 年"><img src="images/albums/timeless.jpg" alt="可啦思刻专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="5" aria-label="查看 15，2011 年"><img src="images/albums/15.jpg" alt="15 专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="6" aria-label="查看 回到未来，2012 年"><img src="images/albums/back-to-wonderland.jpg" alt="回到未来专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="7" aria-label="查看 危险世界，2014 年"><img src="images/albums/dangerous-world.jpg" alt="危险世界专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="8" aria-label="查看 JTW 西游记，2016 年"><img src="images/albums/journey-to-the-west.jpg" alt="JTW 西游记专辑封面" width="600" height="600"></button>
-              <button class="album-cover" type="button" data-album="9" aria-label="查看 The Dreamer，2024 年"><img src="images/albums/the-dreamer.jpg" alt="The Dreamer 专辑封面" width="600" height="600"></button>
+              <button class="album-cover" type="button" data-album="1" aria-label="查看 爱爱爱，2006 年"><img src="images/albums/this-love.jpg" alt="爱爱爱专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="2" aria-label="查看 未来，2007 年"><img src="images/albums/wonderland.jpg" alt="未来专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="3" aria-label="查看 橙月，2008 年"><img src="images/albums/orange-moon.jpg" alt="橙月专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="4" aria-label="查看 可啦思刻，2009 年"><img src="images/albums/timeless.jpg" alt="可啦思刻专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="5" aria-label="查看 15，2011 年"><img src="images/albums/15.jpg" alt="15 专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="6" aria-label="查看 回到未来，2012 年"><img src="images/albums/back-to-wonderland.jpg" alt="回到未来专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="7" aria-label="查看 危险世界，2014 年"><img src="images/albums/dangerous-world.jpg" alt="危险世界专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="8" aria-label="查看 JTW 西游记，2016 年"><img src="images/albums/journey-to-the-west.jpg" alt="JTW 西游记专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+              <button class="album-cover" type="button" data-album="9" aria-label="查看 The Dreamer，2024 年"><img src="images/albums/the-dreamer.jpg" alt="The Dreamer 专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
             </div>
           </div>
           <div class="album-details">
@@ -214,7 +217,7 @@
             <p class="album-count">01 / 10</p>
             <p class="album-year">2005</p>
             <h3 class="album-title" aria-live="polite">Soulboy</h3>
-            <p class="album-hint">在这里向下滚动翻页，也可以点击封面或专辑名。</p>
+            <p class="album-hint">电脑端滚动翻页；手机端左右滑动，也可以使用箭头。</p>
             <div class="album-controls" role="group" aria-label="切换专辑">
               <button class="album-previous" type="button" aria-label="上一张专辑">←</button>
               <button class="album-next" type="button" aria-label="下一张专辑">→</button>
@@ -250,12 +253,12 @@
               <div class="album-stack-stage">
                 <div class="album-stack" role="group" aria-label="蛋堡专辑封面卡片堆">
                   <button class="album-cover" type="button" data-album="0" aria-label="查看 收敛水，2009 年"><img src="images/albums/soft-lipa-lotion.jpg" alt="收敛水专辑封面" width="600" height="600"></button>
-                  <button class="album-cover" type="button" data-album="1" aria-label="查看 Winter Sweet，2009 年"><img src="images/albums/soft-lipa-winter-sweet.jpg" alt="Winter Sweet 专辑封面" width="600" height="600"></button>
-                  <button class="album-cover" type="button" data-album="2" aria-label="查看 月光，2010 年"><img src="images/albums/soft-lipa-moonlight.jpg" alt="月光专辑封面" width="600" height="600"></button>
-                  <button class="album-cover" type="button" data-album="3" aria-label="查看 Old School!，2011 年"><img src="images/albums/soft-lipa-old-school.jpg" alt="Old School! 专辑封面" width="600" height="600"></button>
-                  <button class="album-cover" type="button" data-album="4" aria-label="查看 踩.脚.踏.车，2011 年"><img src="images/albums/soft-lipa-biking.jpg" alt="踩.脚.踏.车专辑封面" width="600" height="600"></button>
-                  <button class="album-cover" type="button" data-album="5" aria-label="查看 你所不知道的杜振熙之内部整修，2013 年"><img src="images/albums/soft-lipa-renovate.jpg" alt="你所不知道的杜振熙之内部整修专辑封面" width="600" height="600"></button>
-                  <button class="album-cover" type="button" data-album="6" aria-label="查看 家常音乐，2020 年"><img src="images/albums/soft-lipa-home-cookin.jpg" alt="家常音乐专辑封面" width="600" height="600"></button>
+                  <button class="album-cover" type="button" data-album="1" aria-label="查看 Winter Sweet，2009 年"><img src="images/albums/soft-lipa-winter-sweet.jpg" alt="Winter Sweet 专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+                  <button class="album-cover" type="button" data-album="2" aria-label="查看 月光，2010 年"><img src="images/albums/soft-lipa-moonlight.jpg" alt="月光专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+                  <button class="album-cover" type="button" data-album="3" aria-label="查看 Old School!，2011 年"><img src="images/albums/soft-lipa-old-school.jpg" alt="Old School! 专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+                  <button class="album-cover" type="button" data-album="4" aria-label="查看 踩.脚.踏.车，2011 年"><img src="images/albums/soft-lipa-biking.jpg" alt="踩.脚.踏.车专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+                  <button class="album-cover" type="button" data-album="5" aria-label="查看 你所不知道的杜振熙之内部整修，2013 年"><img src="images/albums/soft-lipa-renovate.jpg" alt="你所不知道的杜振熙之内部整修专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
+                  <button class="album-cover" type="button" data-album="6" aria-label="查看 家常音乐，2020 年"><img src="images/albums/soft-lipa-home-cookin.jpg" alt="家常音乐专辑封面" width="600" height="600" loading="lazy" decoding="async"></button>
                 </div>
               </div>
               <div class="album-details">
@@ -263,7 +266,7 @@
                 <p class="album-count">01 / 07</p>
                 <p class="album-year">2009</p>
                 <h3 class="album-title" aria-live="polite">收敛水</h3>
-                <p class="album-hint">在这里向下滚动翻页，也可以点击封面或专辑名。</p>
+                <p class="album-hint">电脑端滚动翻页；手机端左右滑动，也可以使用箭头。</p>
                 <div class="album-controls" role="group" aria-label="切换蛋堡专辑">
                   <button class="album-previous" type="button" aria-label="上一张专辑">←</button>
                   <button class="album-next" type="button" aria-label="下一张专辑">→</button>

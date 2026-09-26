@@ -24,6 +24,7 @@
     ]
   };
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobileShelf = window.matchMedia('(max-width: 720px)');
 
   function initShelf(scroll) {
     const albums = catalogs[scroll.dataset.albumShelf];
@@ -41,6 +42,10 @@
     let pageHeight = 1;
     let scrollFrame = 0;
     let settleTimer = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchPointerId = null;
+    let suppressClickUntil = 0;
 
     function show(index) {
       current = Math.max(0, Math.min(albums.length - 1, index));
@@ -49,10 +54,11 @@
         cover.style.transform = '';
         cover.style.opacity = '';
         const depth = i - current;
-        const state = depth === 0 ? 'is-front' : depth > 0 && depth <= 3 ? `is-next-${depth}` : 'is-hidden';
+        const visibleDepth = mobileShelf.matches ? 1 : 3;
+        const state = depth === 0 ? 'is-front' : depth > 0 && depth <= visibleDepth ? `is-next-${depth}` : 'is-hidden';
         cover.className = `album-cover ${state}`;
-        cover.setAttribute('aria-hidden', String(depth < 0 || depth > 3));
-        cover.tabIndex = depth < 0 || depth > 3 ? -1 : 0;
+        cover.setAttribute('aria-hidden', String(depth < 0 || depth > visibleDepth));
+        cover.tabIndex = depth < 0 || depth > visibleDepth ? -1 : 0;
         cover.setAttribute('aria-label', depth === 0 ? '翻到下一张专辑' : `查看 ${albums[i].title}，${albums[i].year} 年`);
       });
       indexButtons.forEach((button, i) => button.setAttribute('aria-current', String(i === current)));
@@ -67,7 +73,7 @@
       const target = Math.max(0, Math.min(albums.length - 1, index));
       stack.classList.remove('is-scrolling');
       show(target);
-      scroll.scrollTo({ top: target * pageHeight, behavior: 'auto' });
+      if (!mobileShelf.matches) scroll.scrollTo({ top: target * pageHeight, behavior: 'auto' });
     }
 
     function showScrollProgress() {
@@ -88,12 +94,34 @@
     }
 
     function resizePages() {
+      scroll.classList.toggle('is-mobile-swipe', mobileShelf.matches);
       pageHeight = scroll.clientHeight || 620;
       scroll.style.setProperty('--album-page-height', `${pageHeight}px`);
-      scroll.scrollTop = current * pageHeight;
+      scroll.scrollTop = mobileShelf.matches ? 0 : current * pageHeight;
+      show(current);
     }
 
-    covers.forEach((cover, index) => cover.addEventListener('click', () => goTo(index === current ? current + 1 : index)));
+    function startSwipe(event) {
+      if (!mobileShelf.matches || event.pointerType === 'mouse') return;
+      touchPointerId = event.pointerId;
+      touchStartX = event.clientX;
+      touchStartY = event.clientY;
+    }
+
+    function finishSwipe(event) {
+      if (event.pointerId !== touchPointerId) return;
+      const deltaX = event.clientX - touchStartX;
+      const deltaY = event.clientY - touchStartY;
+      touchPointerId = null;
+      if (Math.abs(deltaX) < 42 || Math.abs(deltaX) < Math.abs(deltaY) * 1.15) return;
+      suppressClickUntil = Date.now() + 450;
+      goTo(current + (deltaX < 0 ? 1 : -1));
+    }
+
+    covers.forEach((cover, index) => cover.addEventListener('click', () => {
+      if (Date.now() < suppressClickUntil) return;
+      goTo(index === current ? current + 1 : index);
+    }));
     indexButtons.forEach((button, index) => button.addEventListener('click', () => goTo(index)));
     previous.addEventListener('click', () => goTo(current - 1));
     next.addEventListener('click', () => goTo(current + 1));
@@ -109,16 +137,21 @@
       goTo(current + (event.key === 'ArrowDown' || event.key === 'PageDown' ? 1 : -1));
     });
     scroll.addEventListener('scroll', () => {
+      if (mobileShelf.matches) return;
       if (scrollFrame) return;
       scrollFrame = requestAnimationFrame(() => {
         scrollFrame = 0;
         showScrollProgress();
       });
     }, { passive: true });
+    stack.addEventListener('pointerdown', startSwipe, { passive: true });
+    stack.addEventListener('pointerup', finishSwipe, { passive: true });
+    stack.addEventListener('pointercancel', () => { touchPointerId = null; }, { passive: true });
     scroll.classList.add('is-enhanced');
     resizePages();
     if ('ResizeObserver' in window) new ResizeObserver(resizePages).observe(scroll);
     else window.addEventListener('resize', resizePages);
+    mobileShelf.addEventListener('change', resizePages);
     show(0);
   }
 
